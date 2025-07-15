@@ -41,7 +41,7 @@ La qualità del software si fonda su scelte architetturali consapevoli.
 
 * [x] Setup iniziale del progetto e della struttura delle cartelle.
 * [x] Integrazione con Git e configurazione del repository.
-* [ ] Definizione dei model di base (`Account`, `Transaction`).
+* [x] Definizione dei model di base (`Account`, `Transaction`).
 * [ ] **In corso:** Configurazione del database con Entity Framework Core.
 * [ ] Sviluppo delle prime view e viewmodel (Gestione Conti).
 * [ ] Implementazione della dashboard principale.
