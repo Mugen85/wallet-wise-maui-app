@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36301.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet Wise", "Wallet Wise\Wallet Wise.csproj", "{584901DF-DD91-4735-A42F-3BCF5627ED47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletWise", "WalletWise\WalletWise.csproj", "{584901DF-DD91-4735-A42F-3BCF5627ED47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

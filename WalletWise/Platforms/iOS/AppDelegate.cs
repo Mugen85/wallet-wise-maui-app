@@ -1,6 +1,7 @@
 ﻿using Foundation;
+using WalletWise;
 
-namespace Wallet_Wise
+namespace WalletWise.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

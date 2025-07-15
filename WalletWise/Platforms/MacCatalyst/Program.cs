@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Wallet_Wise
+namespace WalletWise.Platforms.MacCatalyst
 {
     public class Program
     {

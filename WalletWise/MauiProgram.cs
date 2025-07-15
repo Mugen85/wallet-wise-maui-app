@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Wallet_Wise;
 
-namespace Wallet_Wise
+namespace WalletWise
 {
     public static class MauiProgram
     {
