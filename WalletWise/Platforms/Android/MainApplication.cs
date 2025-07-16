@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Runtime;
-using WalletWise;
 
 namespace WalletWise.Platforms.Android
 {

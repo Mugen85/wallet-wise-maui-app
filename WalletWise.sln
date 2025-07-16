@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletWise", "WalletWise\WalletWise.csproj", "{584901DF-DD91-4735-A42F-3BCF5627ED47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletWise.Persistence", "WalletWise.Persistence\WalletWise.Persistence.csproj", "{03DB069F-9371-41C1-A7C5-E6B5B82251BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{584901DF-DD91-4735-A42F-3BCF5627ED47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{584901DF-DD91-4735-A42F-3BCF5627ED47}.Release|Any CPU.Build.0 = Release|Any CPU
 		{584901DF-DD91-4735-A42F-3BCF5627ED47}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

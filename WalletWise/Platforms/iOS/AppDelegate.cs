@@ -1,5 +1,4 @@
 ﻿using Foundation;
-using WalletWise;
 
 namespace WalletWise.Platforms.iOS
 {
