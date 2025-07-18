@@ -58,6 +58,7 @@
 
 	<ItemGroup>
 		<!-- Pacchetti MAUI Core (con versione esplicita) -->
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" />
 
@@ -73,12 +74,13 @@
 	</ItemGroup>	
 
 	<ItemGroup>
-	  <Folder Include="Services\" />
-	  <Folder Include="ViewModels\" />
+	  <ProjectReference Include="..\WalletWise.Persistence\WalletWise.Persistence.csproj" />
 	</ItemGroup>	
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WalletWise.Persistence\WalletWise.Persistence.csproj" />
+	  <MauiXaml Update="Views\AccountsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>	
 
 </Project>

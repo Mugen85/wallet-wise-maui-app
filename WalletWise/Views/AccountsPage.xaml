@@ -1,0 +1,30 @@
+<!-- Views/AccountsPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             xmlns:models="clr-namespace:WalletWise.Models;assembly=WalletWise.Persistence"
+             x:Class="WalletWise.Views.AccountsPage"
+             x:DataType="viewmodels:AccountsViewModel"
+             Title="I miei conti">
+
+    <Grid RowDefinitions="*, Auto">
+        <CollectionView ItemsSource="{Binding Accounts}" Grid.Row="0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Account">
+                    <Frame Padding="10" Margin="10" BorderColor="LightGray" CornerRadius="5">
+                        <StackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Type, StringFormat='Tipo: {0}'}" />
+                            <Label Text="{Binding InitialBalance, StringFormat='Saldo iniziale: {0:C}'}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="1" 
+                Text="Aggiungi conto di prova" 
+                Command="{Binding AddAccountCommand}" 
+                Margin="10" />
+    </Grid>
+</ContentPage>

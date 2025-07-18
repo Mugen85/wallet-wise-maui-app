@@ -1,8 +1,10 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Wallet_Wise;
 using WalletWise.Data;
+using WalletWise.Services;
+using WalletWise.ViewModels;
+using WalletWise.Views;
 
 namespace WalletWise;
 
@@ -26,6 +28,15 @@ public static class MauiProgram
         builder.Services.AddDbContext<WalletWiseDbContext>(options =>
             options.UseSqlite($"Filename={dbPath}", b =>
             b.MigrationsAssembly("WalletWise.Persistence")));
+
+        // Registrazione dei Service
+        builder.Services.AddSingleton<IAccountService, AccountService>();
+
+        // Registrazione dei ViewModel
+        builder.Services.AddTransient<AccountsViewModel>();
+
+        // Registrazione delle View
+        builder.Services.AddTransient<AccountsPage>();
 
         var app = builder.Build();
 
