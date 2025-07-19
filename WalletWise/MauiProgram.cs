@@ -1,6 +1,5 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
-using Wallet_Wise;
 using WalletWise.Data;
 using WalletWise.Services;
 using WalletWise.ViewModels;
@@ -34,9 +33,11 @@ public static class MauiProgram
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<AccountsViewModel>();
+        builder.Services.AddTransient<AddAccountViewModel>();
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
+        builder.Services.AddTransient<AddAccountPage>();
 
         var app = builder.Build();
 

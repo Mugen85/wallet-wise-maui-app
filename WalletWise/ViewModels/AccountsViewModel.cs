@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WalletWise.Models;
 using WalletWise.Services;
+using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 
@@ -37,17 +38,8 @@ public partial class AccountsViewModel(IAccountService accountService) : Observa
     [RelayCommand]
     private async Task AddAccountAsync()
     {
-        // Per ora, aggiungiamo un conto di prova.
-        // In futuro, questo aprirà una nuova pagina.
-        var newAccount = new Account
-        {
-            Name = $"Nuovo Conto {DateTime.Now:T}",
-            InitialBalance = 100,
-            Type = AccountType.Checking
-        };
-        await _accountService.AddAccountAsync(newAccount);
-
-        // Ricarica la lista per mostrare il nuovo conto
-        await LoadAccountsAsync();
+        // Naviga alla pagina di aggiunta conto.
+        // Usiamo nameof per evitare di scrivere stringhe a mano ("magic strings")
+        await Shell.Current.GoToAsync(nameof(AddAccountPage));
     }
 }

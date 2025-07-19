@@ -1,4 +1,4 @@
-﻿namespace Wallet_Wise;
+﻿namespace WalletWise;
 
 public partial class App : Application
 {

@@ -1,0 +1,26 @@
+<!-- Views/AddAccountPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             x:Class="WalletWise.Views.AddAccountPage"
+             x:DataType="viewmodels:AddAccountViewModel"
+             Title="Aggiungi Nuovo Conto">
+
+    <VerticalStackLayout Spacing="10" Padding="20">
+        <Label Text="Nome Conto" />
+        <Entry Text="{Binding Name}" Placeholder="Es. Conto Corrente Intesa" />
+
+        <Label Text="Saldo Iniziale" Margin="0,10,0,0" />
+        <Entry Text="{Binding InitialBalance}" Placeholder="0.00" Keyboard="Numeric" />
+
+        <Label Text="Tipo di Conto" Margin="0,10,0,0" />
+        <Picker ItemsSource="{Binding AccountTypes}" 
+                SelectedItem="{Binding SelectedAccountType}"
+                ItemDisplayBinding="{Binding Name}"
+                Title="Seleziona un tipo" />
+
+        <Button Text="Salva Conto" 
+                Command="{Binding SaveAccountCommand}"
+                Margin="0,20,0,0" />
+    </VerticalStackLayout>
+</ContentPage>
