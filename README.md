@@ -1,6 +1,8 @@
-﻿# Wallet Wise
+# Wallet Wise
 
 **Un'app di finanza personale per dominare il caos, un commit alla volta.**
+
+📖 **[Leggi la timeline di sviluppo](DEVELOPMENT_TIMELINE.md)** - Il mio diario di bordo dettagliato del viaggio nello sviluppo di WalletWise
 
 ## 🚀 La doppia sfida: crescita tecnica e personale
 
@@ -42,8 +44,8 @@ La qualità del software si fonda su scelte architetturali consapevoli.
 * [x] Setup iniziale del progetto e della struttura delle cartelle.
 * [x] Integrazione con Git e configurazione del repository.
 * [x] Definizione dei model di base (`Account`, `Transaction`).
-* [ ] **In corso:** Configurazione del database con Entity Framework Core.
-* [ ] Sviluppo delle prime view e viewmodel (Gestione Conti).
+* [x] Configurazione del database con Entity Framework Core.
+* [ ] **In corso:** Sviluppo delle prime view e viewmodel (Gestione Conti).
 * [ ] Implementazione della dashboard principale.
 
 ---
