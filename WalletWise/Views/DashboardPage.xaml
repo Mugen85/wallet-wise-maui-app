@@ -7,7 +7,7 @@
              Title="Dashboard">
 
     <Grid Padding="20">
-        <Frame Padding="20" CornerRadius="10" BorderColor="LightGray">
+        <Frame Style="{StaticResource InfoCard}">
             <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
                 <Label Text="Patrimonio Totale"
                        FontSize="Medium"

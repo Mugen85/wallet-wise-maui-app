@@ -31,4 +31,13 @@ public class AccountService(WalletWiseDbContext context) : IAccountService
         return accounts.Sum(a => a.InitialBalance);
     }
     // --- FINE METODO MODIFICATO ---
+    public async Task DeleteAccountAsync(int accountId)
+    {
+        var account = await _context.Accounts.FindAsync(accountId);
+        if (account != null)
+        {
+            _context.Accounts.Remove(account);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

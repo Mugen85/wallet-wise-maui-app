@@ -42,4 +42,15 @@ public partial class AccountsViewModel(IAccountService accountService) : Observa
         // Usiamo nameof per evitare di scrivere stringhe a mano ("magic strings")
         await Shell.Current.GoToAsync(nameof(AddAccountPage));
     }
+
+    [RelayCommand]
+    private async Task DeleteAccountAsync(Account account)
+    {
+        if (account == null) return;
+
+        await _accountService.DeleteAccountAsync(account.Id);
+
+        // Rimuovi l'account dalla collezione per aggiornare la UI istantaneamente
+        Accounts.Remove(account);
+    }
 }
