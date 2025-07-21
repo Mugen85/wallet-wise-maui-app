@@ -100,4 +100,4 @@ Per avere il massimo controllo e una resa visiva perfetta, ho abbandonato le lib
 
 **Limitazioni di SQLite:** Ho scoperto che il provider EF Core per SQLite non supporta la funzione `Sum()` su tipi `decimal`. La soluzione è stata eseguire l'aggregazione sul client, una scelta performante dato il basso numero di record.
 
-**Rendering del GraphicsView:** La sfida più grande è stata far aggiornare correttamente il grafico personalizzato. La soluzione definitiva, dopo molti tentativi, è stata quella di forzare un "ridisegno" (`Invalidate`) dal code-behind della pagina, creando un collegamento diretto tra il ViewModel e la View che bypassa ogni "glitch" del data binding.
+**Rendering del GraphicsView:** La sfida più grande è stata far aggiornare correttamente il grafico personalizzato. La soluzione, dopo molti tentativi, è stata quella di forzare un "ridisegno" (`Invalidate`) dal code-behind della pagina, creando un collegamento diretto tra il ViewModel e la View che bypassa ogni "glitch" del data binding. Non è ancora perfettamente funzionante, ma risolverò in un prossimo commit
