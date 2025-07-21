@@ -12,12 +12,15 @@ public partial class DashboardPage : ContentPage
         InitializeComponent();
         _viewModel = viewModel;
         BindingContext = _viewModel;
+
+        // --- INIZIO MODIFICA: Colleghiamo il "cavo" per l'aggiornamento ---
+        _viewModel.InvalidateChartRequest += () => PieChartGraphicsView.Invalidate();
+        // --- FINE MODIFICA ---
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        // Usiamo il comando per caricare i dati freschi ogni volta che la pagina appare
         if (_viewModel.LoadDataCommand.CanExecute(null))
         {
             await _viewModel.LoadDataCommand.ExecuteAsync(null);

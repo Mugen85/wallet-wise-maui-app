@@ -2,21 +2,54 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             xmlns:graphics="clr-namespace:WalletWise.Graphics"
              x:Class="WalletWise.Views.DashboardPage"
              x:DataType="viewmodels:DashboardViewModel"
              Title="Dashboard">
 
-    <Grid Padding="20">
-        <Frame Style="{StaticResource InfoCard}">
-            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="Patrimonio Totale"
-                       FontSize="Medium"
-                       HorizontalTextAlignment="Center" />
-                <Label Text="{Binding TotalBalance, StringFormat='{0:C}'}"
-                       FontSize="48"
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
-        </Frame>
-    </Grid>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <Frame Style="{StaticResource InfoCard}">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Patrimonio Totale" FontSize="Medium" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding TotalBalance, StringFormat='{0:C}'}" FontSize="48" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource InfoCard}">
+                <VerticalStackLayout>
+                    <Label Text="Ripartizione conti" FontSize="Medium" FontAttributes="Bold" Margin="0,0,0,15"/>
+
+                    <!-- INIZIO MODIFICA: Layout compatto e centrato -->
+                    <Grid HorizontalOptions="Center">
+                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="20">
+                            <GraphicsView x:Name="PieChartGraphicsView" 
+                                          Grid.Column="0" 
+                                          Drawable="{Binding PieChart}" 
+                                          HeightRequest="150" 
+                                          WidthRequest="150"
+                                          VerticalOptions="Center" />
+
+                            <CollectionView Grid.Column="1" 
+                                            ItemsSource="{Binding LegendItems}" 
+                                            VerticalOptions="Center">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="viewmodels:ChartLegendItem">
+                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10" Padding="0,5">
+                                            <BoxView Grid.Column="0" Color="{Binding Color}" WidthRequest="15" HeightRequest="15" CornerRadius="15" VerticalOptions="Center" />
+                                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
+                                            <Label Grid.Column="2" Text="{Binding Percentage}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </Grid>
+                    <!-- FINE MODIFICA -->
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
