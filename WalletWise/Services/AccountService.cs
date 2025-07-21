@@ -1,4 +1,4 @@
-﻿// Services/AccountService.cs
+﻿// in WalletWise/Services/AccountService.cs
 using Microsoft.EntityFrameworkCore;
 using WalletWise.Data;
 using WalletWise.Models;
@@ -19,4 +19,16 @@ public class AccountService(WalletWiseDbContext context) : IAccountService
         _context.Accounts.Add(account);
         await _context.SaveChangesAsync();
     }
+
+    // --- INIZIO METODO MODIFICATO ---
+    public async Task<decimal> GetTotalBalanceAsync()
+    {
+        // NOTA: Eseguiamo la somma sul client (in memoria) perché il provider
+        // SQLite di EF Core non supporta l'aggregazione 'Sum' su tipi 'decimal'.
+        // Per un'app di finanza personale, il numero di conti è basso, quindi le
+        // performance di questa operazione sono eccellenti.
+        var accounts = await _context.Accounts.ToListAsync();
+        return accounts.Sum(a => a.InitialBalance);
+    }
+    // --- FINE METODO MODIFICATO ---
 }

@@ -34,10 +34,12 @@ public static class MauiProgram
         // Registrazione dei ViewModel
         builder.Services.AddTransient<AccountsViewModel>();
         builder.Services.AddTransient<AddAccountViewModel>();
+        builder.Services.AddTransient<DashboardViewModel>(); //
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
         builder.Services.AddTransient<AddAccountPage>();
+        builder.Services.AddTransient<DashboardPage>();
 
         var app = builder.Build();
 
