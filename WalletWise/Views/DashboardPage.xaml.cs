@@ -5,25 +5,18 @@ namespace WalletWise.Views;
 
 public partial class DashboardPage : ContentPage
 {
-    private readonly DashboardViewModel _viewModel;
-
     public DashboardPage(DashboardViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
-
-        // --- INIZIO MODIFICA: Colleghiamo il "cavo" per l'aggiornamento ---
-        _viewModel.InvalidateChartRequest += () => PieChartGraphicsView.Invalidate();
-        // --- FINE MODIFICA ---
+        BindingContext = viewModel;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        if (_viewModel.LoadDataCommand.CanExecute(null))
+        if (BindingContext is DashboardViewModel vm && vm.LoadDataCommand.CanExecute(null))
         {
-            await _viewModel.LoadDataCommand.ExecuteAsync(null);
+            await vm.LoadDataCommand.ExecuteAsync(null);
         }
     }
 }
