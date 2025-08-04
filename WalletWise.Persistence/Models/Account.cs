@@ -1,5 +1,7 @@
 ﻿// Models/Account.cs
-namespace WalletWise.Models
+
+using System.ComponentModel;
+namespace WalletWise.Persistence.Models
 {
     public class Account
     {
@@ -11,8 +13,13 @@ namespace WalletWise.Models
 
     public enum AccountType
     {
-        Checking,   // Conto Corrente per le spese
-        Savings,    // Conto di Risparmio
-        Investment  // Conto per gli investimenti
+        [Description("Stipendio / Spese")]
+        StipendioSpese,
+
+        [Description("Risparmio")]
+        Risparmio,
+
+        [Description("Investimento")]
+        Investimento
     }
 }

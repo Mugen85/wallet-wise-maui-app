@@ -1,5 +1,5 @@
 ﻿// Services/IAccountService.cs
-using WalletWise.Models;
+using WalletWise.Persistence.Models;
 
 namespace WalletWise.Services;
 

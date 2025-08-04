@@ -1,5 +1,6 @@
 ﻿// Models/Transaction.cs
 using System.ComponentModel.DataAnnotations.Schema;
+using WalletWise.Persistence.Models;
 
 namespace WalletWise.Models
 {

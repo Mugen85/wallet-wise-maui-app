@@ -2,23 +2,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
-             xmlns:models="clr-namespace:WalletWise.Models;assembly=WalletWise.Persistence"
+             xmlns:models="clr-namespace:WalletWise.Persistence.Models;assembly=WalletWise.Persistence"
+             xmlns:converters="clr-namespace:WalletWise.Converters"
              x:Class="WalletWise.Views.AccountsPage"
              x:DataType="viewmodels:AccountsViewModel"
              Title="I miei conti">
+
+    <ContentPage.Resources>
+        <converters:EnumToDescriptionConverter x:Key="EnumConverter" />
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">
 
         <CollectionView ItemsSource="{Binding Accounts}" Grid.Row="0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Account">
-                    <Frame Padding="10" Margin="10,10,10,0" BorderColor="LightGray" CornerRadius="5">
+                    <Frame Style="{StaticResource InfoCard}" Padding="10" Margin="10,10,10,0">
                         <Grid ColumnDefinitions="*, Auto">
 
                             <!-- Dettagli del conto a sinistra -->
                             <StackLayout Grid.Column="0">
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Text="{Binding Type, StringFormat='Tipo: {0}'}" />
+                                <Label Text="{Binding Type, Converter={StaticResource EnumConverter}}" />
                                 <Label Text="{Binding InitialBalance, StringFormat='Saldo Iniziale: {0:C}'}" />
                             </StackLayout>
 
@@ -41,6 +46,7 @@
         <Button Grid.Row="1" 
                 Text="Aggiungi Conto" 
                 Command="{Binding AddAccountCommand}" 
+                Style="{StaticResource PrimaryButton}"
                 Margin="10" />
 
     </Grid>

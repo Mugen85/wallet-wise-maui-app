@@ -14,6 +14,8 @@ public partial class App : Application
         Thread.CurrentThread.CurrentUICulture = culture;
         // --- FINE MODIFICA ---
 
+        System.Diagnostics.Debug.WriteLine($"Percorso DB: {FileSystem.AppDataDirectory}");
+
         MainPage = new AppShell();
     }
 }
