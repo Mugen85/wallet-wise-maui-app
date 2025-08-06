@@ -24,7 +24,7 @@
                             <StackLayout Grid.Column="0">
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
                                 <Label Text="{Binding Type, Converter={StaticResource EnumConverter}}" />
-                                <Label Text="{Binding InitialBalance, StringFormat='Saldo Iniziale: {0:C}'}" />
+                                <Label Text="{Binding CurrentBalance, StringFormat='Saldo Attuale: {0:C}'}" />
                             </StackLayout>
 
                             <!-- Bottone Elimina a destra -->

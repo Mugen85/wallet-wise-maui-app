@@ -4,6 +4,7 @@ using WalletWise.Data;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 using WalletWise.Views;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace WalletWise;
 
@@ -30,6 +31,10 @@ public static class MauiProgram
 
         // Registrazione dei Service
         builder.Services.AddSingleton<IAccountService, AccountService>();
+        builder.Services.AddSingleton<ITransactionService, TransactionService>();
+        builder.Services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+        builder.Services.AddTransient<AddTransactionViewModel>();
+        builder.Services.AddTransient<AddTransactionPage>();
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<AccountsViewModel>();

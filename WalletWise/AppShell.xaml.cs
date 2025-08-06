@@ -10,6 +10,8 @@ namespace WalletWise
 
             // Registriamo la rotta per la pagina di aggiunta conto
             Routing.RegisterRoute(nameof(AddAccountPage), typeof(AddAccountPage));
+            // Registriamo la rotta per la pagina di aggiunta transazione
+            Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
         }
     }
 }
