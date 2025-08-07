@@ -87,3 +87,23 @@ Ho risolto il problema della formattazione della valuta, forzando l'applicazione
 ### 🔧 Lezioni imparate / troubleshooting
 - **Accettare la sconfitta tecnica**: La lezione più importante di questa tappa è stata imparare a riconoscere quando una funzionalità, per quanto desiderabile, sta diventando un "debito tecnico" troppo grande. Abbandonare temporaneamente il grafico non è un fallimento, ma una decisione architetturale matura per proteggere la salute del progetto.
 - **Controllo della globalizzazione**: Ho imparato a impostare esplicitamente la CultureInfo all'avvio dell'app per avere il pieno controllo su come vengono formattati numeri, date e valute.
+
+## ⚙️ Tappa 6: l'upgrade del motore (Refactoring Architetturale)
+
+Dopo aver costruito la funzionalità delle transazioni, mi sono scontrato con un problema critico: i saldi dei conti non si aggiornavano in tempo reale. L'acceleratore rispondeva in ritardo. Invece di applicare soluzioni temporanee, ho deciso di fermarmi e fare un vero e proprio **upgrade architetturale**.
+
+### 🔩 Implementazione delle Transazioni
+Ho creato tutta l'infrastruttura per aggiungere nuove transazioni (modelli, service, viewmodel e view), rendendo il patrimonio totale dinamico.
+
+### 🎯 Il problema: dati "vecchi" (Stale Data)
+Ho capito che la causa del mancato aggiornamento era la gestione del `DbContext`. L'istanza, registrata come `Singleton` o `Scoped`, veniva riutilizzata e la sua cache interna non rifletteva le ultime modifiche al database.
+
+### 🔧 Il Refactoring: `DbContextFactory`
+Ho sostituito l'iniezione diretta del `DbContext` con una `IDbContextFactory`. Questo pattern, raccomandato da Microsoft, garantisce che ogni singola operazione dei miei service riceva una nuova istanza del `DbContext`, fresca e pulita, eliminando alla radice ogni problema di caching.
+
+### 🧹 Pulizia finale
+Con il problema risolto alla fonte, ho potuto rimuovere tutti i workaround precedenti, come il sistema di messaggistica (`IMessenger`), rendendo il codice più semplice e lineare.
+
+### 🔧 Lezioni imparate / troubleshooting
+- **Singleton vs. Transient vs. Factory**: Questa tappa è stata una lezione fondamentale sul ciclo di vita dei servizi e sull'importanza di scegliere la strategia giusta. Per le operazioni di database in app di lunga durata, la `DbContextFactory` è la soluzione più robusta.
+- **No ai Workaround**: Ho imparato che, di fronte a un problema architetturale, insistere con soluzioni temporanee è controproducente. A volte, la scelta più veloce e sicura è fermarsi, fare un refactoring pesante e risolvere il problema alla radice.
