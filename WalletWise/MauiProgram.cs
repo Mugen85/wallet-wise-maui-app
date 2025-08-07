@@ -4,7 +4,6 @@ using WalletWise.Data;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 using WalletWise.Views;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace WalletWise;
 
@@ -25,14 +24,14 @@ public static class MauiProgram
         string dbPath = Path.Combine(FileSystem.AppDataDirectory, "walletwise.db3");
 
         // 2. Registra il DbContext per la Dependency Injection
-        builder.Services.AddDbContext<WalletWiseDbContext>(options =>
-            options.UseSqlite($"Filename={dbPath}", b =>
-            b.MigrationsAssembly("WalletWise.Persistence")));
+        // --- INIZIO MODIFICA 1: Usiamo la DbContextFactory ---
+        builder.Services.AddDbContextFactory<WalletWiseDbContext>(options =>
+            options.UseSqlite($"Filename={dbPath}"));
 
         // Registrazione dei Service
-        builder.Services.AddSingleton<IAccountService, AccountService>();
+        // --- INIZIO MODIFICA 2: I servizi ora possono essere Singleton ---
+        IServiceCollection serviceCollection = builder.Services.AddSingleton<IAccountService, AccountService>();
         builder.Services.AddSingleton<ITransactionService, TransactionService>();
-        builder.Services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         builder.Services.AddTransient<AddTransactionViewModel>();
         builder.Services.AddTransient<AddTransactionPage>();
 
@@ -50,9 +49,10 @@ public static class MauiProgram
 
         // 3. Applica le migrazioni DOPO aver costruito l'app
         // Questo è il punto più sicuro per interagire con i servizi.
-        using (var scope = app.Services.CreateScope())
+        // --- INIZIO MODIFICA 3: Aggiorniamo la logica di migrazione ---
+        var dbContextFactory = app.Services.GetRequiredService<IDbContextFactory<WalletWiseDbContext>>();
+        using (var dbContext = dbContextFactory.CreateDbContext())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<WalletWiseDbContext>();
             dbContext.Database.Migrate();
         }
 

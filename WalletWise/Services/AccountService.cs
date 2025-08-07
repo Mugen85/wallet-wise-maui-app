@@ -3,65 +3,67 @@ using Microsoft.EntityFrameworkCore;
 using WalletWise.Data;
 using WalletWise.Persistence.Models;
 
-namespace WalletWise.Services;
-
-public class AccountService(WalletWiseDbContext context) : IAccountService
+namespace WalletWise.Services
 {
-
-    public async Task<List<Account>> GetAccountsAsync()
+    public class AccountService(IDbContextFactory<WalletWiseDbContext> contextFactory) : IAccountService
     {
-        var accounts = await context.Accounts.Include(a => a.Transactions).ToListAsync();
-
-        // Calcoliamo il saldo attuale per ogni conto prima di restituirlo.
-        foreach (var account in accounts)
+        public async Task<List<Account>> GetAccountsAsync()
         {
-            decimal income = account.Transactions
-                .Where(t => t.Type == TransactionType.Income)
-                .Sum(t => t.Amount);
+            await using var context = await contextFactory.CreateDbContextAsync();
+            var accounts = await context.Accounts.Include(a => a.Transactions).ToListAsync();
 
-            decimal expense = account.Transactions
-                .Where(t => t.Type == TransactionType.Expense)
-                .Sum(t => t.Amount);
+            // --- INIZIO LOGICA DI CALCOLO ---
+            foreach (var account in accounts)
+            {
+                decimal income = account.Transactions
+                    .Where(t => t.Type == TransactionType.Income)
+                    .Sum(t => t.Amount);
 
-            account.CurrentBalance = account.InitialBalance + income - expense;
+                decimal expense = account.Transactions
+                    .Where(t => t.Type == TransactionType.Expense)
+                    .Sum(t => t.Amount);
+
+                account.CurrentBalance = account.InitialBalance + income - expense;
+            }
+            // --- FINE LOGICA DI CALCOLO ---
+
+            return accounts;
         }
 
-        return accounts;
-    }
-
-    public async Task AddAccountAsync(Account account)
-    {
-        context.Accounts.Add(account);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task<decimal> GetTotalBalanceAsync()
-    {
-        var accounts = await context.Accounts.Include(a => a.Transactions).ToListAsync();
-
-        decimal totalBalance = 0;
-        foreach (var account in accounts)
+        public async Task<decimal> GetTotalBalanceAsync()
         {
-            decimal income = account.Transactions
-                .Where(t => t.Type == TransactionType.Income)
-                .Sum(t => t.Amount);
+            await using var context = await contextFactory.CreateDbContextAsync();
+            var accounts = await context.Accounts.Include(a => a.Transactions).ToListAsync();
 
-            decimal expense = account.Transactions
-                .Where(t => t.Type == TransactionType.Expense)
-                .Sum(t => t.Amount);
+            // --- INIZIO LOGICA DI CALCOLO ---
+            decimal totalBalance = 0;
+            foreach (var account in accounts)
+            {
+                decimal income = account.Transactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
+                decimal expense = account.Transactions.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
+                totalBalance += account.InitialBalance + income - expense;
+            }
+            // --- FINE LOGICA DI CALCOLO ---
 
-            totalBalance += account.InitialBalance + income - expense;
+            return totalBalance;
         }
-        return totalBalance;
-    }
 
-    public async Task DeleteAccountAsync(int accountId)
-    {
-        var account = await context.Accounts.FindAsync(accountId);
-        if (account != null)
+        public async Task AddAccountAsync(Account account)
         {
-            context.Accounts.Remove(account);
+            await using var context = await contextFactory.CreateDbContextAsync();
+            context.Accounts.Add(account);
             await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAccountAsync(int accountId)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+            var account = await context.Accounts.FindAsync(accountId);
+            if (account != null)
+            {
+                context.Accounts.Remove(account);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

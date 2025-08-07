@@ -1,11 +1,9 @@
 ﻿// in WalletWise/ViewModels/AddTransactionViewModel.cs
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
-using WalletWise.Messages;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
 
@@ -15,7 +13,7 @@ namespace WalletWise.ViewModels;
 public class TransactionTypeDisplay { public TransactionType Value { get; set; } public string Name { get; set; } = string.Empty; }
 
 
-public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService, IMessenger messenger) : ObservableObject
+public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService) : ObservableObject
 {
     [ObservableProperty] private decimal _amount;
     [ObservableProperty] private string _description = string.Empty;
@@ -43,6 +41,7 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
         }
     }
 
+
     [RelayCommand]
     private async Task SaveTransactionAsync()
     {
@@ -56,10 +55,7 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
             Type = SelectedTransactionType.Value,
             AccountId = SelectedAccount.Id
         };
-
         await transactionService.AddTransactionAsync(newTransaction);
-
-        messenger.Send(new TransactionAddedMessage(newTransaction));        
 
         await Shell.Current.GoToAsync("..");
     }

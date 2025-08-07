@@ -1,36 +1,17 @@
 ﻿// in ViewModels/DashboardViewModel.cs
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using WalletWise.Messages;
 using WalletWise.Services;
 using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 
-public partial class DashboardViewModel : ObservableObject
+public partial class DashboardViewModel(IAccountService accountService) : ObservableObject
 {
-    private readonly IAccountService _accountService;
-    private readonly IMessenger _messenger;
+    private readonly IAccountService _accountService = accountService;
 
     [ObservableProperty]
     private decimal _totalBalance;
-
-    public DashboardViewModel(IAccountService accountService, IMessenger messenger)
-    {
-        _accountService = accountService;
-        _messenger = messenger;
-
-        // Registra il ViewModel per ricevere il messaggio
-        _messenger.Register<TransactionAddedMessage>(this, (r, m) =>
-        {
-            // Quando arriva un messaggio, esegui il comando per ricaricare i dati
-            if (LoadDataCommand.CanExecute(null))
-            {
-                LoadDataCommand.Execute(null);
-            }
-        });
-    }
 
     [RelayCommand]
     private async Task LoadDataAsync()

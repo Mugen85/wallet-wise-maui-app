@@ -1,15 +1,17 @@
 ﻿// in WalletWise/Services/TransactionService.cs
+using Microsoft.EntityFrameworkCore;
 using WalletWise.Data;
 using WalletWise.Persistence.Models;
 
-namespace WalletWise.Services;
-
-public class TransactionService(WalletWiseDbContext context) : ITransactionService
+namespace WalletWise.Services
 {
-    public async Task AddTransactionAsync(Transaction transaction)
+    public class TransactionService(IDbContextFactory<WalletWiseDbContext> contextFactory) : ITransactionService
     {
-        context.Transactions.Add(transaction);
-        await context.SaveChangesAsync();
+        public async Task AddTransactionAsync(Transaction transaction)
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+            context.Transactions.Add(transaction);
+            await context.SaveChangesAsync();
+        }
     }
 }
-
