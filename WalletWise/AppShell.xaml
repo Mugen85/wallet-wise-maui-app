@@ -20,6 +20,12 @@
                 ContentTemplate="{DataTemplate views:AccountsPage}"
                 Route="AccountsPage" />
         </Tab>
-    </TabBar>
 
+        <Tab Title="Transazioni" Icon="transactions_icon.png">
+            <ShellContent
+                Title="Le tue transazioni"
+                ContentTemplate="{DataTemplate views:TransactionsPage}"
+                Route="TransactionsPage" />
+        </Tab>
+    </TabBar>
 </Shell>

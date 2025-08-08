@@ -18,10 +18,5 @@ public partial class DashboardViewModel(IAccountService accountService) : Observ
     {
         TotalBalance = await _accountService.GetTotalBalanceAsync();
     }
-
-    [RelayCommand]
-    private async Task AddTransactionAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(AddTransactionPage));
-    }
+    
 }

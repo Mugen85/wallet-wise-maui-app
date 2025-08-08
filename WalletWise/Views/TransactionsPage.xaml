@@ -1,0 +1,40 @@
+<!-- in WalletWise/Views/TransactionsPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WalletWise.Views.TransactionsPage"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             xmlns:models="clr-namespace:WalletWise.Persistence.Models;assembly=WalletWise.Persistence"
+             x:DataType="viewmodels:TransactionsViewModel"
+             Title="Transazioni">
+
+    <Grid RowDefinitions="*, Auto" Padding="10">
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Transactions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Transaction">
+                    <Frame Padding="15" Margin="5" Style="{StaticResource InfoCard}">
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding Description}" FontAttributes="Bold" FontSize="16"/>
+                            <Label Grid.Column="0" Grid.Row="1" Text="{Binding Account.Name}" FontSize="12" TextColor="{StaticResource SecondaryText}"/>
+
+                            <Label Grid.Column="1" Grid.Row="0" HorizontalOptions="End" FontSize="18" FontAttributes="Bold">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Income">
+                                        <Setter Property="TextColor" Value="Green" />
+                                        <Setter Property="Text" Value="{Binding Amount, StringFormat='+ {0:C}'}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Expense">
+                                        <Setter Property="TextColor" Value="Red" />
+                                        <Setter Property="Text" Value="{Binding Amount, StringFormat='- {0:C}'}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="End" FontSize="12" TextColor="{StaticResource SecondaryText}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="1" Text="Aggiungi Transazione" Command="{Binding GoToAddTransactionCommand}" Style="{StaticResource PrimaryButton}" Margin="10"/>
+    </Grid>
+</ContentPage>

@@ -18,7 +18,6 @@
                            FontSize="48"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center" />
-                    <Button Text="Aggiungi Transazione" Command="{Binding AddTransactionCommand}" Style="{StaticResource PrimaryButton}" />
                 </VerticalStackLayout>
             </Frame>
 

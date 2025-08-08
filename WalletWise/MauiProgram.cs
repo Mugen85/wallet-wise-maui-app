@@ -34,6 +34,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ITransactionService, TransactionService>();
         builder.Services.AddTransient<AddTransactionViewModel>();
         builder.Services.AddTransient<AddTransactionPage>();
+        builder.Services.AddTransient<TransactionsViewModel>();
+        builder.Services.AddTransient<TransactionsPage>();
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<AccountsViewModel>();

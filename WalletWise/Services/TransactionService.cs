@@ -7,6 +7,17 @@ namespace WalletWise.Services
 {
     public class TransactionService(IDbContextFactory<WalletWiseDbContext> contextFactory) : ITransactionService
     {
+        public async Task<List<Transaction>> GetTransactionsAsync()
+        {
+            await using var context = await contextFactory.CreateDbContextAsync();
+            // Carichiamo le transazioni, includendo il conto associato,
+            // e le ordiniamo per data, dalla più recente alla più vecchia.
+            return await context.Transactions
+                                .Include(t => t.Account)
+                                .OrderByDescending(t => t.Date)
+                                .ToListAsync();
+        }
+
         public async Task AddTransactionAsync(Transaction transaction)
         {
             await using var context = await contextFactory.CreateDbContextAsync();
@@ -14,4 +25,5 @@ namespace WalletWise.Services
             await context.SaveChangesAsync();
         }
     }
+
 }

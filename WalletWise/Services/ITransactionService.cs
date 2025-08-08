@@ -5,5 +5,6 @@ namespace WalletWise.Services;
 
 public interface ITransactionService
 {
+    Task<List<Transaction>> GetTransactionsAsync();
     Task AddTransactionAsync(Transaction transaction);
 }
