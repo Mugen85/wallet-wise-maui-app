@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WalletWise.Views.AddTransactionPage"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
-             xmlns:converters="clr-namespace:WalletWise.Converters"
              x:DataType="viewmodels:AddTransactionViewModel"
              Title="Aggiungi Transazione">
-    <ContentPage.Resources>
-        <converters:EnumToDescriptionConverter x:Key="EnumConverter" />
-        <converters:StringDecimalConverter x:Key="DecimalConverter" />
-    </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *" Padding="20" RowSpacing="15">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" Padding="20" RowSpacing="15">
 
         <Label Grid.Row="0" Text="Importo" />
         <Entry Grid.Row="1" Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
@@ -20,12 +15,10 @@
         <Entry Grid.Row="3" Text="{Binding Description}" />
 
         <Grid Grid.Row="4" ColumnDefinitions="*,*,*" ColumnSpacing="10">
-
-            <VerticalStackLayout Grid.Column="0">
+            <VerticalStackLayout>
                 <Label Text="Data" />
                 <DatePicker Date="{Binding Date}" />
             </VerticalStackLayout>
-
             <VerticalStackLayout Grid.Column="1">
                 <Label Text="Tipo" />
                 <Picker ItemsSource="{Binding TransactionTypes}"
@@ -33,7 +26,6 @@
                         ItemDisplayBinding="{Binding Name}"
                         Title="Seleziona tipo"/>
             </VerticalStackLayout>
-
             <VerticalStackLayout Grid.Column="2">
                 <Label Text="Conto" />
                 <Picker ItemsSource="{Binding Accounts}"
@@ -43,7 +35,16 @@
             </VerticalStackLayout>
         </Grid>
 
-        <Button Grid.Row="5" 
+        <!-- INIZIO MODIFICA: Sostituito Entry con Picker -->
+        <VerticalStackLayout Grid.Row="5">
+            <Label Text="Categoria" />
+            <Picker ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    Title="Seleziona categoria" />
+        </VerticalStackLayout>
+        <!-- FINE MODIFICA -->
+
+        <Button Grid.Row="6" 
                 Text="Salva" 
                 Command="{Binding SaveTransactionCommand}" 
                 Style="{StaticResource PrimaryButton}" 

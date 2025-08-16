@@ -1,0 +1,25 @@
+<!-- in WalletWise/Views/AddBudgetPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WalletWise.Views.AddBudgetPage"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             x:DataType="viewmodels:AddBudgetViewModel"
+             Title="Aggiungi Budget">
+    <Grid Padding="20" RowSpacing="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Text="Categoria di Spesa" />
+        <Entry Grid.Row="1" Text="{Binding Category}" Placeholder="Es. Spesa Alimentare" />
+
+        <Label Grid.Row="2" Text="Importo Budget Mensile" />
+        <Entry Grid.Row="3" Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
+
+        <Button Grid.Row="4" Text="Salva Budget" Command="{Binding SaveBudgetCommand}" Style="{StaticResource PrimaryButton}" VerticalOptions="End"/>
+    </Grid>
+</ContentPage>

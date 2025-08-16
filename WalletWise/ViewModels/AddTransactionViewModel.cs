@@ -20,9 +20,12 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
     [ObservableProperty] private DateTime _date = DateTime.Today;
     [ObservableProperty] private TransactionTypeDisplay? _selectedTransactionType;
     [ObservableProperty] private Account? _selectedAccount;
+    [ObservableProperty] private string _category = string.Empty;
+    [ObservableProperty] private string? _selectedCategory;
 
     public ObservableCollection<TransactionTypeDisplay> TransactionTypes { get; } = [];
     public ObservableCollection<Account> Accounts { get; } = [];
+    public ObservableCollection<string> Categories { get; } = [];
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -39,6 +42,14 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
                             .Select(tt => new TransactionTypeDisplay { Value = tt, Name = GetEnumDescription(tt) });
             foreach (var type in types) TransactionTypes.Add(type);
         }
+        if (!Categories.Any())
+        {
+            Categories.Add("Spesa alimentare");
+            Categories.Add("Trasporti");
+            Categories.Add("Svago");
+            Categories.Add("Bollette");
+            Categories.Add("Altro");
+        }
     }
 
 
@@ -51,6 +62,7 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
         {
             Amount = Amount,
             Description = Description,
+            Category = Category, // <-- Aggiungi questa riga
             Date = Date,
             Type = SelectedTransactionType.Value,
             AccountId = SelectedAccount.Id

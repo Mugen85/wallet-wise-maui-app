@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WalletWise.Services;
+using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 
@@ -28,4 +29,10 @@ public partial class BudgetViewModel(IBudgetService budgetService) : ObservableO
             BudgetItems.Add(item);
         }
     }
+    [RelayCommand]
+    private async Task GoToAddBudgetAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(AddBudgetPage));
+    }
+
 }

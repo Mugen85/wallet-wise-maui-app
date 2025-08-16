@@ -7,7 +7,7 @@
              x:DataType="viewmodels:BudgetViewModel"
              Title="Budget"
              BackgroundColor="{StaticResource PageBackground}">
-    <Grid RowDefinitions="Auto, *" Padding="10">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
         <Label Grid.Row="0"
                Text="{Binding CurrentMonthDisplay}"
                FontSize="24"
@@ -29,11 +29,16 @@
                                         <Span Text="{Binding BudgetedAmount, StringFormat='{0:C}'}" TextColor="{StaticResource SecondaryText}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
-                            </Label>
+                            </Label>                           
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button Grid.Row="2" 
+             Text="Aggiungi/Modifica Budget" 
+             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BudgetViewModel}}, Path=GoToAddBudgetCommand}" 
+             Style="{StaticResource PrimaryButton}" 
+             Margin="10"/>
     </Grid>
 </ContentPage>

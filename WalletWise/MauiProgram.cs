@@ -32,24 +32,26 @@ public static class MauiProgram
         // Registrazione dei Service
         // --- INIZIO MODIFICA 2: I servizi ora possono essere Singleton ---
         IServiceCollection serviceCollection = builder.Services.AddSingleton<IAccountService, AccountService>();
-        builder.Services.AddSingleton<ITransactionService, TransactionService>();
-        builder.Services.AddTransient<AddTransactionViewModel>();
-        builder.Services.AddTransient<AddTransactionPage>();
-        builder.Services.AddTransient<TransactionsViewModel>();
-        builder.Services.AddTransient<TransactionsPage>();
+        builder.Services.AddSingleton<ITransactionService, TransactionService>();     
+        builder.Services.AddSingleton<IBudgetService, BudgetService>();
 
         // Registrazione dei ViewModel
-        builder.Services.AddSingleton<IBudgetService, BudgetService>();
-        builder.Services.AddTransient<BudgetViewModel>();
-        builder.Services.AddTransient<BudgetPage>();
+        builder.Services.AddTransient<BudgetViewModel>();        
         builder.Services.AddTransient<AccountsViewModel>();
         builder.Services.AddTransient<AddAccountViewModel>();
-        builder.Services.AddTransient<DashboardViewModel>(); //
+        builder.Services.AddTransient<DashboardViewModel>();
+        builder.Services.AddTransient<AddBudgetViewModel>();
+        builder.Services.AddTransient<AddTransactionViewModel>();
+        builder.Services.AddTransient<TransactionsViewModel>();
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
         builder.Services.AddTransient<AddAccountPage>();
         builder.Services.AddTransient<DashboardPage>();
+        builder.Services.AddTransient<BudgetPage>();
+        builder.Services.AddTransient<AddBudgetPage>();
+        builder.Services.AddTransient<AddTransactionPage>();
+        builder.Services.AddTransient<TransactionsPage>();
 
         var app = builder.Build();
 
@@ -60,21 +62,6 @@ public static class MauiProgram
         using (var dbContext = dbContextFactory.CreateDbContext())
         {
             dbContext.Database.Migrate();
-
-            // --- INIZIO MODIFICA: Aggiungiamo i dati di prova ---
-            // Controlliamo se ci sono già dei budget per evitare di aggiungerli ogni volta
-            if (!dbContext.Budgets.Any())
-            {
-                var now = DateTime.Now;
-                dbContext.Budgets.AddRange(
-                    new Budget { Category = "Spesa Alimentare", Amount = 400, Month = now.Month, Year = now.Year },
-                    new Budget { Category = "Trasporti", Amount = 150, Month = now.Month, Year = now.Year },
-                    new Budget { Category = "Svago", Amount = 100, Month = now.Month, Year = now.Year }
-                );
-                dbContext.SaveChanges();
-            }
-            // --- FINE MODIFICA ---
-
         }
 
         return app;

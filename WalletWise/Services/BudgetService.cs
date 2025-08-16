@@ -41,4 +41,26 @@ public class BudgetService(IDbContextFactory<WalletWiseDbContext> contextFactory
 
         return budgetStatusList;
     }
+    public async Task SaveBudgetAsync(Budget budget)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        // Cerca se esiste già un budget per questa categoria nel mese/anno corrente
+        var existingBudget = await context.Budgets
+            .FirstOrDefaultAsync(b => b.Year == budget.Year && b.Month == budget.Month && b.Category.ToUpper() == budget.Category.ToUpper());
+
+        if (existingBudget != null)
+        {
+            // Se esiste, lo aggiorna
+            existingBudget.Amount = budget.Amount;
+        }
+        else
+        {
+            // Se non esiste, lo aggiunge
+            context.Budgets.Add(budget);
+        }
+
+        await context.SaveChangesAsync();
+    }
+
 }
