@@ -1,6 +1,7 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
-using WalletWise.Data;
+using WalletWise.Persistence.Data;
+using WalletWise.Persistence.Models;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 using WalletWise.Views;
@@ -38,6 +39,9 @@ public static class MauiProgram
         builder.Services.AddTransient<TransactionsPage>();
 
         // Registrazione dei ViewModel
+        builder.Services.AddSingleton<IBudgetService, BudgetService>();
+        builder.Services.AddTransient<BudgetViewModel>();
+        builder.Services.AddTransient<BudgetPage>();
         builder.Services.AddTransient<AccountsViewModel>();
         builder.Services.AddTransient<AddAccountViewModel>();
         builder.Services.AddTransient<DashboardViewModel>(); //
@@ -56,6 +60,21 @@ public static class MauiProgram
         using (var dbContext = dbContextFactory.CreateDbContext())
         {
             dbContext.Database.Migrate();
+
+            // --- INIZIO MODIFICA: Aggiungiamo i dati di prova ---
+            // Controlliamo se ci sono già dei budget per evitare di aggiungerli ogni volta
+            if (!dbContext.Budgets.Any())
+            {
+                var now = DateTime.Now;
+                dbContext.Budgets.AddRange(
+                    new Budget { Category = "Spesa Alimentare", Amount = 400, Month = now.Month, Year = now.Year },
+                    new Budget { Category = "Trasporti", Amount = 150, Month = now.Month, Year = now.Year },
+                    new Budget { Category = "Svago", Amount = 100, Month = now.Month, Year = now.Year }
+                );
+                dbContext.SaveChanges();
+            }
+            // --- FINE MODIFICA ---
+
         }
 
         return app;

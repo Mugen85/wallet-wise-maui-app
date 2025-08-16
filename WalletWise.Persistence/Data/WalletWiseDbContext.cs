@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using WalletWise.Persistence.Models;
 
-namespace WalletWise.Data;
+namespace WalletWise.Persistence.Data;
 
 public partial class WalletWiseDbContext(DbContextOptions<WalletWiseDbContext> options) : DbContext(options)
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<Budget> Budgets { get; set; } // Aggiunto DbSet per il modello Budget
 }

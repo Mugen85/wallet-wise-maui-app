@@ -11,8 +11,8 @@ using WalletWise.Persistence.Data;
 namespace WalletWise.Persistence.Migrations
 {
     [DbContext(typeof(WalletWiseDbContext))]
-    [Migration("20250806152930_AddTransactions")]
-    partial class AddTransactions
+    [Migration("20250816092219_AddBudgetTable")]
+    partial class AddBudgetTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,30 @@ namespace WalletWise.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("WalletWise.Persistence.Models.Budget", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Budgets");
                 });
 
             modelBuilder.Entity("WalletWise.Persistence.Models.Transaction", b =>

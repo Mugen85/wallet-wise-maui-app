@@ -1,6 +1,7 @@
 ﻿// Data/WalletWiseDbContextFactory.cs
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using WalletWise.Persistence.Data;
 
 namespace WalletWise.Data;
 

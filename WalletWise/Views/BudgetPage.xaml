@@ -1,0 +1,39 @@
+<!-- in WalletWise/Views/BudgetPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WalletWise.Views.BudgetPage"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             xmlns:services="clr-namespace:WalletWise.Services"
+             x:DataType="viewmodels:BudgetViewModel"
+             Title="Budget"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="Auto, *" Padding="10">
+        <Label Grid.Row="0"
+               Text="{Binding CurrentMonthDisplay}"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,10,0,20"/>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding BudgetItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="services:BudgetStatus">
+                    <Frame Padding="15" Margin="5" Style="{StaticResource InfoCard}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Grid.Column="0" Text="{Binding Category}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding SpentAmount, StringFormat='{0:C}'}" TextColor="Red"/>
+                                        <Span Text=" / "/>
+                                        <Span Text="{Binding BudgetedAmount, StringFormat='{0:C}'}" TextColor="{StaticResource SecondaryText}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

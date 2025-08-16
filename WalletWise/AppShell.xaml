@@ -27,5 +27,11 @@
                 ContentTemplate="{DataTemplate views:TransactionsPage}"
                 Route="TransactionsPage" />
         </Tab>
+        <Tab Title="Budget" Icon="budget_icon.png">
+            <ShellContent
+                Title="Budget Mensile"
+                ContentTemplate="{DataTemplate views:BudgetPage}"
+                Route="BudgetPage" />   
+        </Tab>
     </TabBar>
 </Shell>

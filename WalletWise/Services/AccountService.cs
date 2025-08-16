@@ -1,6 +1,6 @@
 ﻿// in WalletWise/Services/AccountService.cs
 using Microsoft.EntityFrameworkCore;
-using WalletWise.Data;
+using WalletWise.Persistence.Data;
 using WalletWise.Persistence.Models;
 
 namespace WalletWise.Services

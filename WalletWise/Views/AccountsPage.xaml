@@ -12,16 +12,16 @@
         <converters:EnumToDescriptionConverter x:Key="EnumConverter" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, Auto">
+    <Grid RowDefinitions="*, Auto" Padding="10">
 
         <CollectionView ItemsSource="{Binding Accounts}" Grid.Row="0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Account">
-                    <Frame Style="{StaticResource InfoCard}" Padding="10" Margin="10,10,10,0">
-                        <Grid ColumnDefinitions="*, Auto">
+                    <Frame Style="{StaticResource InfoCard}" Padding="10" Margin="10,10,10,10">
+                        <Grid ColumnDefinitions="*, Auto" >
 
                             <!-- Dettagli del conto a sinistra -->
-                            <StackLayout Grid.Column="0">
+                            <StackLayout Grid.Column="0" >
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
                                 <Label Text="{Binding Type, Converter={StaticResource EnumConverter}}" />
                                 <Label Text="{Binding CurrentBalance, StringFormat='Saldo Attuale: {0:C}'}" />
