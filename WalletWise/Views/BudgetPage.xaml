@@ -19,6 +19,13 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="services:BudgetStatus">
                     <Frame Padding="15" Margin="5" Style="{StaticResource InfoCard}">
+                        <!-- INIZIO MODIFICA: Aggiunto riconoscitore di TAP -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BudgetViewModel}}, Path=GoToEditBudgetCommand}"
+                        CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <!-- FINE MODIFICA -->
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0" Text="{Binding Category}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                             <Label Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
@@ -29,7 +36,7 @@
                                         <Span Text="{Binding BudgetedAmount, StringFormat='{0:C}'}" TextColor="{StaticResource SecondaryText}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
-                            </Label>                           
+                            </Label>
                         </Grid>
                     </Frame>
                 </DataTemplate>
