@@ -1,6 +1,5 @@
 ﻿// in WalletWise/Services/IBudgetService.cs
 using WalletWise.Persistence.Models;
-using WalletWise.ViewModels; // Aggiungeremo un DTO qui
 
 namespace WalletWise.Services;
 
@@ -18,4 +17,5 @@ public interface IBudgetService
 {
     Task<List<BudgetStatus>> GetBudgetStatusForMonthAsync(int year, int month);
     Task SaveBudgetAsync(Budget budget);
+    Task DeleteBudgetAsync(string category, int year, int month);
 }

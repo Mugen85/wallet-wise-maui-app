@@ -34,15 +34,12 @@
                         Title="Seleziona conto"/>
             </VerticalStackLayout>
         </Grid>
-
-        <!-- INIZIO MODIFICA: Sostituito Entry con Picker -->
         <VerticalStackLayout Grid.Row="5">
             <Label Text="Categoria" />
             <Picker ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategory}"
                     Title="Seleziona categoria" />
-        </VerticalStackLayout>
-        <!-- FINE MODIFICA -->
+        </VerticalStackLayout>       
 
         <Button Grid.Row="6" 
                 Text="Salva" 

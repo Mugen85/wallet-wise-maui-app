@@ -1,5 +1,4 @@
-﻿// in WalletWise/ViewModels/AddTransactionViewModel.cs
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,9 +8,7 @@ using WalletWise.Services;
 
 namespace WalletWise.ViewModels;
 
-// Le classi helper sono identiche a quelle che abbiamo già creato
 public class TransactionTypeDisplay { public TransactionType Value { get; set; } public string Name { get; set; } = string.Empty; }
-
 
 public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService) : ObservableObject
 {
@@ -20,12 +17,11 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
     [ObservableProperty] private DateTime _date = DateTime.Today;
     [ObservableProperty] private TransactionTypeDisplay? _selectedTransactionType;
     [ObservableProperty] private Account? _selectedAccount;
-    [ObservableProperty] private string _category = string.Empty;
     [ObservableProperty] private string? _selectedCategory;
 
     public ObservableCollection<TransactionTypeDisplay> TransactionTypes { get; } = [];
     public ObservableCollection<Account> Accounts { get; } = [];
-    public ObservableCollection<string> Categories { get; } = [];
+    public ObservableCollection<string> Categories { get; } = new(CategoryData.GetDefaultCategories());
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -42,16 +38,7 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
                             .Select(tt => new TransactionTypeDisplay { Value = tt, Name = GetEnumDescription(tt) });
             foreach (var type in types) TransactionTypes.Add(type);
         }
-        if (!Categories.Any())
-        {
-            Categories.Add("Spesa alimentare");
-            Categories.Add("Trasporti");
-            Categories.Add("Svago");
-            Categories.Add("Bollette");
-            Categories.Add("Altro");
-        }
     }
-
 
     [RelayCommand]
     private async Task SaveTransactionAsync()
@@ -62,7 +49,7 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
         {
             Amount = Amount,
             Description = Description,
-            Category = Category, // <-- Aggiungi questa riga
+            Category = SelectedCategory ?? string.Empty, // Salva la categoria selezionata
             Date = Date,
             Type = SelectedTransactionType.Value,
             AccountId = SelectedAccount.Id

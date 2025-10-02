@@ -7,7 +7,7 @@ using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 
-public partial class BudgetViewModel(IBudgetService budgetService) : ObservableObject
+public partial class BudgetViewModel(IBudgetService budgetService, IAlertService alertService) : ObservableObject
 {
     public ObservableCollection<BudgetStatus> BudgetItems { get; } = [];
 
@@ -33,6 +33,19 @@ public partial class BudgetViewModel(IBudgetService budgetService) : ObservableO
     private async Task GoToAddBudgetAsync()
     {
         await Shell.Current.GoToAsync(nameof(AddBudgetPage));
+    }
+    [RelayCommand]
+    private async Task DeleteBudgetAsync(BudgetStatus? budgetStatus)
+    {
+        if (budgetStatus is null) return;
+
+        bool confirmed = await alertService.ShowConfirmationAsync("Conferma", $"Sei sicuro di voler eliminare il budget per '{budgetStatus.Category}'?");
+
+        if (confirmed)
+        {
+            await budgetService.DeleteBudgetAsync(budgetStatus.Category, DateTime.Now.Year, DateTime.Now.Month);
+            BudgetItems.Remove(budgetStatus); // Aggiorna la UI istantaneamente
+        }
     }
 
 }

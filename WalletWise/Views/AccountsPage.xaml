@@ -28,14 +28,12 @@
                             </StackLayout>
 
                             <!-- Bottone Elimina a destra -->
-                            <Button Grid.Column="1"
+                            <Button Grid.Column="2" 
                                     Text="X"
-                                    FontAttributes="Bold"
-                                    BackgroundColor="Transparent"
-                                    TextColor="Red"
-                                    VerticalOptions="Center"
+                                    Style="{StaticResource DeleteButton}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AccountsViewModel}}, Path=DeleteAccountCommand}"
-                                    CommandParameter="{Binding .}" />
+                                    CommandParameter="{Binding .}"
+                                    VerticalOptions="Center"/>
 
                         </Grid>
                     </Frame>

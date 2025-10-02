@@ -15,11 +15,21 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Text="Categoria di Spesa" />
-        <Entry Grid.Row="1" Text="{Binding Category}" Placeholder="Es. Spesa Alimentare" />
+        <Picker Grid.Row="1" 
+                Title="Seleziona una categoria"
+                ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding SelectedCategory}"
+                ItemDisplayBinding="{Binding .}"/>     
+
 
         <Label Grid.Row="2" Text="Importo Budget Mensile" />
         <Entry Grid.Row="3" Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
 
-        <Button Grid.Row="4" Text="Salva Budget" Command="{Binding SaveBudgetCommand}" Style="{StaticResource PrimaryButton}" VerticalOptions="End"/>
+        <!-- INIZIO MODIFICA: Raggruppiamo i bottoni in fondo -->
+        <VerticalStackLayout Grid.Row="4" VerticalOptions="End" Spacing="10">
+            <Button Text="Salva Budget" Command="{Binding SaveBudgetCommand}" Style="{StaticResource PrimaryButton}" />
+            <Button Text="Annulla" Command="{Binding CancelCommand}" Style="{StaticResource SecondaryButton}" />
+        </VerticalStackLayout>
+        <!-- FINE MODIFICA -->
     </Grid>
 </ContentPage>

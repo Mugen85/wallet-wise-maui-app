@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WalletWise.Services;
-using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 

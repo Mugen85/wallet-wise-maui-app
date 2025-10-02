@@ -1,7 +1,6 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
 using WalletWise.Persistence.Data;
-using WalletWise.Persistence.Models;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 using WalletWise.Views;
@@ -34,6 +33,7 @@ public static class MauiProgram
         IServiceCollection serviceCollection = builder.Services.AddSingleton<IAccountService, AccountService>();
         builder.Services.AddSingleton<ITransactionService, TransactionService>();     
         builder.Services.AddSingleton<IBudgetService, BudgetService>();
+        builder.Services.AddSingleton<IAlertService, AlertService>();
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<BudgetViewModel>();        

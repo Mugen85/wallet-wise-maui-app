@@ -26,7 +26,7 @@
                         CommandParameter="{Binding .}"/>
                         </Frame.GestureRecognizers>
                         <!-- FINE MODIFICA -->
-                        <Grid ColumnDefinitions="*, Auto">
+                        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10">
                             <Label Grid.Column="0" Text="{Binding Category}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
                             <Label Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
                                 <Label.FormattedText>
@@ -37,6 +37,12 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                            <Button Grid.Column="2" 
+                                    Text="X"
+                                    Style="{StaticResource DeleteButton}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BudgetViewModel}}, Path=DeleteBudgetCommand}"
+                                    CommandParameter="{Binding .}"
+                                    VerticalOptions="Center"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>
