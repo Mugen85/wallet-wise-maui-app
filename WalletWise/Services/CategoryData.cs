@@ -2,7 +2,8 @@
 
 public static class CategoryData
 {
-    public static List<string> GetDefaultCategories()
+    // Rinominiamo il metodo per chiarezza
+    public static List<string> GetExpenseCategories()
     {
         return
         [
@@ -12,6 +13,18 @@ public static class CategoryData
             "Bollette",
             "Salute",
             "Casa",
+            "Altro"
+        ];
+    }
+
+    // Aggiungiamo il nuovo metodo per le entrate
+    public static List<string> GetIncomeCategories()
+    {
+        return
+        [
+            "Stipendio",
+            "Dividendi/Proventi",
+            "Risparmio",
             "Altro"
         ];
     }

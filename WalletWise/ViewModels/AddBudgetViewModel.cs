@@ -16,7 +16,7 @@ public partial class AddBudgetViewModel(IBudgetService budgetService) : Observab
     [ObservableProperty]
     private string? _selectedCategory;
 
-    public ObservableCollection<string> Categories { get; } = new(CategoryData.GetDefaultCategories());
+    public ObservableCollection<string> Categories { get; } = new(CategoryData.GetExpenseCategories());
 
     // Proprietà "temporanea" per ricevere il dato dalla navigazione in modifica
     public string IncomingCategory { set => PreselectCategory(value); }
