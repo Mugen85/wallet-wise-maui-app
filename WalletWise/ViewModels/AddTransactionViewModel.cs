@@ -85,6 +85,12 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
         await Shell.Current.GoToAsync("..");
     }
 
+    [RelayCommand]
+    private static async Task CancelAsync()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
     private static string GetEnumDescription(Enum enumObj)
     {
         FieldInfo? fieldInfo = enumObj.GetType().GetField(enumObj.ToString());

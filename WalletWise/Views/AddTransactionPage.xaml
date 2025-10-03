@@ -6,45 +6,69 @@
              x:DataType="viewmodels:AddTransactionViewModel"
              Title="Aggiungi Transazione">
 
-    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" Padding="20" RowSpacing="15">
+    <Grid Padding="20" RowSpacing="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Riga 1: Data, Tipo, Importo -->
+            <RowDefinition Height="Auto"/>
+            <!-- Riga 2: Conto, Categoria -->
+            <RowDefinition Height="Auto"/>
+            <!-- Riga 3: Descrizione -->
+            <RowDefinition Height="*"/>
+            <!-- Spacer -->
+            <RowDefinition Height="Auto"/>
+            <!-- Pulsanti -->
+        </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Text="Importo" />
-        <Entry Grid.Row="1" Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
-
-        <Label Grid.Row="2" Text="Descrizione" />
-        <Entry Grid.Row="3" Text="{Binding Description}" />
-
-        <Grid Grid.Row="4" ColumnDefinitions="*,*,*" ColumnSpacing="10">
-            <VerticalStackLayout>
-                <Label Text="Data" />
+        <!-- Riga 1 con 3 colonne -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="10">
+            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                <Label Text="Data"/>
                 <DatePicker Date="{Binding Date}" />
             </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="1">
-                <Label Text="Tipo" />
-                <Picker ItemsSource="{Binding TransactionTypes}"
-                        SelectedItem="{Binding SelectedTransactionType}"
-                        ItemDisplayBinding="{Binding Name}"
-                        Title="Seleziona tipo"/>
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="2">
-                <Label Text="Conto" />
-                <Picker ItemsSource="{Binding Accounts}"
-                        SelectedItem="{Binding SelectedAccount}"
-                        ItemDisplayBinding="{Binding Name}"
-                        Title="Seleziona conto"/>
-            </VerticalStackLayout>
-        </Grid>
-        <VerticalStackLayout Grid.Row="5">
-            <Label Text="Categoria" />
-            <Picker ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding SelectedCategory}"
-                    Title="Seleziona categoria" />
-        </VerticalStackLayout>       
 
-        <Button Grid.Row="6" 
-                Text="Salva" 
-                Command="{Binding SaveTransactionCommand}" 
-                Style="{StaticResource PrimaryButton}" 
+            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                <Label Text="Importo"/>
+                <Entry Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" 
+                Keyboard="Numeric" />
+            </VerticalStackLayout>
+
+            <Picker Grid.Column="2" 
+                Title="Tipo" 
+                ItemsSource="{Binding TransactionTypes}" 
+                SelectedItem="{Binding SelectedTransactionType}" 
+                ItemDisplayBinding="{Binding Name}"
                 VerticalOptions="End"/>
+
+            
+        </Grid>
+
+        <!-- Riga 2 con 2 colonne -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Picker Grid.Column="0" 
+                Title="Conto" 
+                ItemsSource="{Binding Accounts}" 
+                SelectedItem="{Binding SelectedAccount}" 
+                ItemDisplayBinding="{Binding Name}" />
+
+            <Picker Grid.Column="1" 
+                Title="Categoria" 
+                ItemsSource="{Binding Categories}" 
+                SelectedItem="{Binding SelectedCategory}" 
+                ItemDisplayBinding="{Binding .}"/>
+        </Grid>
+
+        <!-- Riga 3 per la Descrizione -->
+        <VerticalStackLayout Grid.Row="2" Spacing="5">
+            <Label Text="Descrizione (Opzionale)"/>
+            <Entry Text="{Binding Description}" />
+        </VerticalStackLayout>
+
+        <!-- Pulsanti raggruppati e ancorati al fondo -->
+        <VerticalStackLayout Grid.Row="4" Margin="0,20,0,0" Spacing="10">
+            <Button Text="Salva Transazione" Command="{Binding SaveTransactionCommand}" Style="{StaticResource PrimaryButton}" />
+            <Button Text="Annulla" Command="{Binding CancelCommand}" Style="{StaticResource SecondaryButton}" />
+        </VerticalStackLayout>
     </Grid>
+
 </ContentPage>
