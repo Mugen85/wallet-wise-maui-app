@@ -424,13 +424,26 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <!-- Stile per le nostre card -->
-    <Style TargetType="Frame" x:Key="InfoCard">
-        <Setter Property="Padding" Value="20" />
-        <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="HasShadow" Value="True" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CardBackgroundColor}" />
-        <Setter Property="BorderColor" Value="{StaticResource SecondaryColor}" />
+    <!-- Stili per le schede informative (Card) -->
+    <Style x:Key="InfoCard" TargetType="Frame">
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="BorderColor" Value="{StaticResource Gray200}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource White}"/>
+    </Style>
+
+    <Style x:Key="CardTitle" TargetType="Label">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{StaticResource Gray900}"/>
+    </Style>
+
+    <Style x:Key="CardAmount" TargetType="Label">
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
     </Style>
 
     <!-- Stile per i bottoni principali -->

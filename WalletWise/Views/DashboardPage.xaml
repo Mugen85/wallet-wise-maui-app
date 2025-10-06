@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             xmlns:services="clr-namespace:WalletWise.Services" 
              x:Class="WalletWise.Views.DashboardPage"
              x:DataType="viewmodels:DashboardViewModel"
              Title="Dashboard">
@@ -10,16 +11,47 @@
         <VerticalStackLayout Spacing="20" Padding="20">
 
             <Frame Style="{StaticResource InfoCard}">
-                <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="Patrimonio Totale"
-                           FontSize="Medium"
-                           HorizontalTextAlignment="Center" />
-                    <Label Text="{Binding TotalBalance, StringFormat='{0:C}'}"
-                           FontSize="48"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center" />
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Patrimonio Totale" Style="{StaticResource CardTitle}" />
+                    <Label Text="{Binding TotalBalance, StringFormat='{0:C}'}" Style="{StaticResource CardAmount}" />
                 </VerticalStackLayout>
             </Frame>
+
+            <!-- INIZIO NUOVA SEZIONE BUDGET -->
+            <Frame Style="{StaticResource InfoCard}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Situazione Budget Mensile" Style="{StaticResource CardTitle}" />
+
+                    <CollectionView ItemsSource="{Binding BudgetSummary}">
+                        <CollectionView.ItemTemplate>
+                            <!-- MODIFICA CHIAVE: Specifichiamo il tipo di dati per ogni riga -->
+                            <DataTemplate x:DataType="services:BudgetStatus">
+                                <Grid RowDefinitions="Auto, Auto" RowSpacing="5" Padding="0,10">
+
+                                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+                                        <Label Grid.Column="0" Text="{Binding Category}" FontAttributes="Bold" />
+                                        <Label Grid.Column="1">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding SpentAmount, StringFormat='{0:C}'}" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
+                                                    <Span Text=" / " />
+                                                    <Span Text="{Binding BudgetedAmount, StringFormat='{0:C}'}" TextColor="{StaticResource SecondaryText}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Grid>
+
+                                    <ProgressBar Grid.Row="1" 
+                                                 Progress="{Binding SpentAmount, Converter={StaticResource DivisionConverter}, ConverterParameter={Binding BudgetedAmount}}" 
+                                                 ProgressColor="{StaticResource Primary}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Frame>
+            <!-- FINE NUOVA SEZIONE BUDGET -->
 
         </VerticalStackLayout>
     </ScrollView>
