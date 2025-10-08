@@ -17,42 +17,25 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- INIZIO NUOVA SEZIONE BUDGET -->
+            <!-- Sezione Budget -->
             <Frame Style="{StaticResource InfoCard}">
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Situazione Budget Mensile" Style="{StaticResource CardTitle}" />
 
-                    <CollectionView ItemsSource="{Binding BudgetSummary}">
-                        <CollectionView.ItemTemplate>
-                            <!-- MODIFICA CHIAVE: Specifichiamo il tipo di dati per ogni riga -->
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding BudgetSummary}" Spacing="15">
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="services:BudgetStatus">
-                                <Grid RowDefinitions="Auto, Auto" RowSpacing="5" Padding="0,10">
-
-                                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
-                                        <Label Grid.Column="0" Text="{Binding Category}" FontAttributes="Bold" />
-                                        <Label Grid.Column="1">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding SpentAmount, StringFormat='{0:C}'}" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
-                                                    <Span Text=" / " />
-                                                    <Span Text="{Binding BudgetedAmount, StringFormat='{0:C}'}" TextColor="{StaticResource SecondaryText}"/>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                    </Grid>
-
-                                    <ProgressBar Grid.Row="1" 
-                                                 Progress="{Binding SpentAmount, Converter={StaticResource DivisionConverter}, ConverterParameter={Binding BudgetedAmount}}" 
-                                                 ProgressColor="{StaticResource Primary}" />
-                                </Grid>
+                                <!-- TEST 2: Aggiungiamo la ProgressBar. -->
+                                <VerticalStackLayout Padding="0,10" Spacing="5">
+                                    <Label Text="{Binding Category}" FontAttributes="Bold" />
+                                    <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
 
                 </VerticalStackLayout>
             </Frame>
-            <!-- FINE NUOVA SEZIONE BUDGET -->
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
