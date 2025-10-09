@@ -1,8 +1,8 @@
-<!-- Views/DashboardPage.xaml -->
+<!-- in WalletWise/Views/DashboardPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
-             xmlns:services="clr-namespace:WalletWise.Services" 
+             xmlns:services="clr-namespace:WalletWise.Services"
              x:Class="WalletWise.Views.DashboardPage"
              x:DataType="viewmodels:DashboardViewModel"
              Title="Dashboard">
@@ -19,23 +19,9 @@
 
             <!-- Sezione Budget -->
             <Frame Style="{StaticResource InfoCard}">
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="Situazione Budget Mensile" Style="{StaticResource CardTitle}" />
-
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding BudgetSummary}" Spacing="15">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="services:BudgetStatus">
-                                <!-- TEST 2: Aggiungiamo la ProgressBar. -->
-                                <VerticalStackLayout Padding="0,10" Spacing="5">
-                                    <Label Text="{Binding Category}" FontAttributes="Bold" />
-                                    <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource Primary}" />
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-
-                </VerticalStackLayout>
+                <VerticalStackLayout x:Name="BudgetContainer" Spacing="15" />
             </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -17,15 +17,21 @@ public partial class DashboardViewModel(IAccountService accountService, IBudgetS
 
     [RelayCommand]
     private async Task LoadDataAsync()
-    {      
-
+    {
         var accounts = await accountService.GetAccountsAsync();
         TotalBalance = accounts.Sum(a => a.CurrentBalance);
 
         var now = DateTime.Now;
-        var budgetStatusList = await budgetService.GetBudgetStatusForMonthAsync(now.Year, now.Month);        
+        var budgetStatusList = await budgetService.GetBudgetStatusForMonthAsync(now.Year, now.Month);
+
+        // --- INIZIO MODIFICA CHIAVE ---
+        // Assegniamo un colore a ogni budget prima di passarlo alla UI.
+        for (int i = 0; i < budgetStatusList.Count; i++)
+        {
+            budgetStatusList[i].CategoryColor = ColorData.GetColorByIndex(i);
+        }
+        // --- FINE MODIFICA CHIAVE ---
 
         BudgetSummary = new ObservableCollection<BudgetStatus>(budgetStatusList);
-        
     }
 }
