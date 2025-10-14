@@ -6,6 +6,7 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
+    <Color x:Key="Red">#FF0000</Color>
     <Color x:Key="PrimaryColor">#512BD4</Color>
     <Color x:Key="SecondaryColor">#DFD8F7</Color>
     <Color x:Key="PageBackgroundColor">#F5F5F5</Color>
@@ -17,6 +18,7 @@
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="SecondaryText">#6e6e6e</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
 

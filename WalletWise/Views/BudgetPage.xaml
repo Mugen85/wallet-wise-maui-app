@@ -16,54 +16,9 @@
                HorizontalOptions="Center"
                Margin="0,10,0,20"/>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding BudgetItems}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="services:BudgetStatus">
-                    <Frame Style="{StaticResource InfoCard}" Padding="15" Margin="5">
-                        <!-- Gesto per la Modifica -->
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BudgetViewModel}}, Path=GoToEditBudgetCommand}"
-                                CommandParameter="{Binding .}"/>
-                        </Frame.GestureRecognizers>
-
-                        <VerticalStackLayout Spacing="5">
-                            <!-- Riga 1: Categoria, Valori e Tasto Elimina -->
-                            <Grid ColumnDefinitions="*, Auto">
-                                <Label Grid.Column="0"
-                                       Text="{Binding Category}"
-                                       FontAttributes="Bold"
-                                       VerticalOptions="Center"/>
-
-                                <HorizontalStackLayout Grid.Column="1" Spacing="10" VerticalOptions="Center">
-                                    <!-- Valori numerici -->
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Label Text="{Binding SpentAmountDisplay}"
-                                               TextColor="{Binding CategoryColor}"
-                                               FontAttributes="Bold"/>
-                                        <Label Text="/"
-                                               TextColor="{StaticResource SecondaryText}"/>
-                                        <Label Text="{Binding BudgetedAmountDisplay}"
-                                               TextColor="{StaticResource SecondaryText}"/>
-                                    </HorizontalStackLayout>
-                                    <!-- Tasto Elimina -->
-                                    <Button Text="X"
-                                            Style="{StaticResource DeleteButton}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BudgetViewModel}}, Path=DeleteBudgetCommand}"
-                                            CommandParameter="{Binding .}"/>
-                                </HorizontalStackLayout>
-                            </Grid>
-
-                            <!-- Riga 2: Barra di Progresso -->
-                            <ProgressBar Progress="{Binding Progress}"
-                                         ProgressColor="{Binding CategoryColor}"
-                                         HeightRequest="8"/>
-
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout x:Name="BudgetListContainer" Spacing="10" />
+        </ScrollView>
 
         <Button Grid.Row="2"
                 Text="Aggiungi Budget"
