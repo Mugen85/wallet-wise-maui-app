@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
-using WalletWise.Views;
 
 namespace WalletWise.ViewModels;
 

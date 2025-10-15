@@ -1,7 +1,5 @@
 ﻿// in WalletWise/Services/BudgetService.cs
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics; // Puoi lasciarlo per futuri debug
-using WalletWise.Persistence;
 using WalletWise.Persistence.Data;
 using WalletWise.Persistence.Models;
 

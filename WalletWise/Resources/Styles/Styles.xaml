@@ -433,6 +433,17 @@
         <Setter Property="BackgroundColor" Value="{StaticResource White}"/>
     </Style>
 
+    <!-- Stile per i pulsanti di azione compatti (Modifica, Elimina) -->
+    <Style x:Key="ActionButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="40"/>
+    </Style>
+
     <!-- Stile per il pulsante di cancellazione -->
     <Style x:Key="DeleteButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="Transparent"/>

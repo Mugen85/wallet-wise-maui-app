@@ -16,6 +16,7 @@
                HorizontalOptions="Center"
                Margin="0,10,0,20"/>
 
+        
         <ScrollView Grid.Row="1">
             <VerticalStackLayout x:Name="BudgetListContainer" Spacing="10" />
         </ScrollView>

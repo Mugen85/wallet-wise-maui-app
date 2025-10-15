@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 
@@ -19,8 +19,11 @@ public partial class BudgetPage : ContentPage
     {
         base.OnAppearing();
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
-        // Carichiamo i dati la prima volta
-        RefreshData();
+        // Carichiamo i dati ogni volta che la pagina appare
+        if (_viewModel.LoadBudgetsCommand.CanExecute(null))
+        {
+            _viewModel.LoadBudgetsCommand.Execute(null);
+        }
     }
 
     protected override void OnDisappearing()
@@ -35,14 +38,6 @@ public partial class BudgetPage : ContentPage
         if (e.PropertyName == nameof(_viewModel.BudgetItems))
         {
             BuildBudgetList();
-        }
-    }
-
-    private void RefreshData()
-    {
-        if (_viewModel.LoadBudgetsCommand.CanExecute(null))
-        {
-            _viewModel.LoadBudgetsCommand.Execute(null);
         }
     }
 
@@ -66,16 +61,6 @@ public partial class BudgetPage : ContentPage
             Padding = 15
         };
 
-        // Aggiungiamo il gesto del TAP per la modifica
-        var tapGesture = new TapGestureRecognizer();
-        tapGesture.Tapped += (s, e) =>
-        {
-            if (_viewModel.GoToEditBudgetCommand.CanExecute(budgetData))
-            {
-                _viewModel.GoToEditBudgetCommand.Execute(budgetData);
-            }
-        };
-        frame.GestureRecognizers.Add(tapGesture);
 
         // Layout interno
         var mainLayout = new VerticalStackLayout { Spacing = 8 };
@@ -103,6 +88,19 @@ public partial class BudgetPage : ContentPage
         valuesLayout.Children.Add(new Label { Text = budgetData.SpentAmountDisplay, FontAttributes = FontAttributes.Bold, TextColor = budgetData.CategoryColor });
         valuesLayout.Children.Add(new Label { Text = " / ", TextColor = (Color)Application.Current.Resources["SecondaryText"] });
         valuesLayout.Children.Add(new Label { Text = budgetData.BudgetedAmountDisplay, TextColor = (Color)Application.Current.Resources["SecondaryText"] });
+
+        // --- INIZIO MODIFICA CHIAVE ---
+        // Sostituiamo il Button con un ImageButton
+        var editButton = new ImageButton
+        {
+            Source = "edit_icon.svg", // Il nome del nostro file SVG
+            Command = _viewModel.GoToEditBudgetCommand,
+            CommandParameter = budgetData,
+            HeightRequest = 24, // Dimensioni standard per un'icona cliccabile
+            WidthRequest = 24,
+            VerticalOptions = LayoutOptions.Center
+        };
+        // --- FINE MODIFICA CHIAVE ---
 
         var deleteButton = new Button
         {
