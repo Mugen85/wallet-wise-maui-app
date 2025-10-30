@@ -44,7 +44,9 @@ public partial class BudgetViewModel(IBudgetService budgetService, IAlertService
     private async Task GoToEditBudgetAsync(BudgetStatus budgetStatus)
     {
         if (budgetStatus == null) return;
-        await Shell.Current.GoToAsync($"{nameof(AddBudgetPage)}?Category={budgetStatus.Category}&Amount={budgetStatus.BudgetedAmount}");
+
+        var amountString = budgetStatus.BudgetedAmount.ToString(CultureInfo.InvariantCulture);
+        await Shell.Current.GoToAsync($"{nameof(AddBudgetPage)}?Category={budgetStatus.Category}&Amount={amountString}");
     }
 
     [RelayCommand]

@@ -84,24 +84,25 @@ public partial class BudgetPage : ContentPage
 
         var rightSideLayout = new HorizontalStackLayout { Spacing = 10, VerticalOptions = LayoutOptions.Center };
 
-        var valuesLayout = new HorizontalStackLayout { Spacing = 5 };
+        var valuesLayout = new HorizontalStackLayout
+        {
+            Spacing = 5,
+            VerticalOptions = LayoutOptions.Center
+        };
         valuesLayout.Children.Add(new Label { Text = budgetData.SpentAmountDisplay, FontAttributes = FontAttributes.Bold, TextColor = budgetData.CategoryColor });
         valuesLayout.Children.Add(new Label { Text = " / ", TextColor = (Color)Application.Current.Resources["SecondaryText"] });
         valuesLayout.Children.Add(new Label { Text = budgetData.BudgetedAmountDisplay, TextColor = (Color)Application.Current.Resources["SecondaryText"] });
 
-        // --- INIZIO MODIFICA CHIAVE ---
-        // Sostituiamo il Button con un ImageButton che usa l'icona PNG
         var editButton = new ImageButton
         {
-            Source = "edit_icon.png", // Il nome del nostro file PNG
+            Source = "edit_icon.png",
             Command = _viewModel.GoToEditBudgetCommand,
             CommandParameter = budgetData,
-            HeightRequest = 24, // Dimensioni standard per un'icona cliccabile
+            HeightRequest = 24,
             WidthRequest = 24,
             VerticalOptions = LayoutOptions.Center,
-            BackgroundColor = Colors.Transparent // Assicura che non ci sia uno sfondo colorato
+            BackgroundColor = Colors.Transparent
         };
-        // --- FINE MODIFICA CHIAVE ---
 
         var deleteButton = new Button
         {
@@ -112,6 +113,7 @@ public partial class BudgetPage : ContentPage
         };
 
         rightSideLayout.Children.Add(valuesLayout);
+        rightSideLayout.Children.Add(editButton);
         rightSideLayout.Children.Add(deleteButton);
         topRowGrid.Add(rightSideLayout, 1, 0);
 

@@ -4,11 +4,12 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
+using System.Globalization;
 
 namespace WalletWise.ViewModels;
 
 [QueryProperty(nameof(IncomingCategory), "Category")]
-[QueryProperty(nameof(Amount), "Amount")]
+[QueryProperty(nameof(IncomingAmount), "Amount")]
 public partial class AddBudgetViewModel(IBudgetService budgetService) : ObservableObject
 {
     [ObservableProperty]
@@ -20,6 +21,21 @@ public partial class AddBudgetViewModel(IBudgetService budgetService) : Observab
     public ObservableCollection<string> Categories { get; } = new(CategoryData.GetExpenseCategories());
 
     public string IncomingCategory { set => PreselectCategory(value); }
+
+    public string IncomingAmount
+    {
+        set => ParseAmount(value);
+    }
+
+    private void ParseAmount(string amountString)
+    {
+        // Usiamo il nostro C# per convertire la stringa in modo sicuro,
+        // specificando che il formato è universale (InvariantCulture).
+        if (decimal.TryParse(amountString, NumberStyles.Any, CultureInfo.InvariantCulture, out var amountValue))
+        {
+            Amount = amountValue;
+        }
+    }
 
     private void PreselectCategory(string categoryName)
     {
