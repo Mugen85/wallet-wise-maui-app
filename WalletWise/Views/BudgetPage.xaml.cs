@@ -90,15 +90,16 @@ public partial class BudgetPage : ContentPage
         valuesLayout.Children.Add(new Label { Text = budgetData.BudgetedAmountDisplay, TextColor = (Color)Application.Current.Resources["SecondaryText"] });
 
         // --- INIZIO MODIFICA CHIAVE ---
-        // Sostituiamo il Button con un ImageButton
+        // Sostituiamo il Button con un ImageButton che usa l'icona PNG
         var editButton = new ImageButton
         {
-            Source = "edit_icon.svg", // Il nome del nostro file SVG
+            Source = "edit_icon.png", // Il nome del nostro file PNG
             Command = _viewModel.GoToEditBudgetCommand,
             CommandParameter = budgetData,
             HeightRequest = 24, // Dimensioni standard per un'icona cliccabile
             WidthRequest = 24,
-            VerticalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.Center,
+            BackgroundColor = Colors.Transparent // Assicura che non ci sia uno sfondo colorato
         };
         // --- FINE MODIFICA CHIAVE ---
 
