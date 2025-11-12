@@ -1,0 +1,50 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             x:Class="WalletWise.Views.OnboardingPage"
+             x:DataType="viewmodels:OnboardingViewModel"
+             Title="Benvenuto in Wallet Wise"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <VerticalStackLayout Spacing="15"
+                         Padding="30"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Fill">
+
+        <Label
+            Text="Benvenuto!"
+            Style="{StaticResource CardTitle}"
+            HorizontalOptions="Center"
+            FontSize="32"/>
+
+        <Label
+            Text="Per iniziare, crea il tuo primo conto. Potrai aggiungerne altri in seguito."
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            TextColor="{StaticResource SecondaryText}"/>
+
+        <Frame Style="{StaticResource InfoCard}" Padding="20" Margin="0,20,0,0">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Nome Conto" FontAttributes="Bold" />
+                <Entry Text="{Binding AccountName}"
+                       Placeholder="Es. Conto Corrente" />
+
+                <Label Text="Saldo Iniziale" FontAttributes="Bold" Margin="0,10,0,0" />
+
+        
+                <Entry Text="{Binding InitialBalance}"
+                       Placeholder="0,00"
+                       Keyboard="Numeric" />
+                
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button
+            Text="Inizia"
+            Command="{Binding StartCommand}"
+            Style="{StaticResource PrimaryButton}"
+            Margin="0,20,0,0"/>
+
+    </VerticalStackLayout>
+</ContentPage>

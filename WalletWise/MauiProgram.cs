@@ -43,6 +43,8 @@ public static class MauiProgram
         builder.Services.AddTransient<AddBudgetViewModel>();
         builder.Services.AddTransient<AddTransactionViewModel>();
         builder.Services.AddTransient<TransactionsViewModel>();
+        builder.Services.AddTransient<OnboardingViewModel>();
+        builder.Services.AddTransient<OnboardingPage>();
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
