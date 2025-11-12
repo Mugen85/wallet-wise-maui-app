@@ -10,13 +10,18 @@ namespace WalletWise.ViewModels;
 
 public partial class BudgetViewModel(IBudgetService budgetService, IAlertService alertService) : ObservableObject
 {
-    // L'attributo [ObservableProperty] genera una proprietà pubblica "BudgetItems"
-    // a partire da questo campo privato "_budgetItems".
     [ObservableProperty]
     private ObservableCollection<BudgetStatus> _budgetItems = [];
 
     [ObservableProperty]
     private string _currentMonthDisplay = DateTime.Now.ToString("MMMM yyyy", new CultureInfo("it-IT"));
+
+    // --- INIZIO MODIFICA (PEZZO 5) ---
+    // 2. Aggiungiamo il "sensore"
+    // Questo dirà alla UI se deve mostrare la lista o il prompt di clonazione.
+    [ObservableProperty]
+    private bool _hasBudgets;
+    // --- FINE MODIFICA ---
 
     [RelayCommand]
     private async Task LoadBudgetsAsync()
@@ -29,10 +34,28 @@ public partial class BudgetViewModel(IBudgetService budgetService, IAlertService
             budgets[i].CategoryColor = ColorData.GetColorByIndex(i);
         }
 
-        // Questa è la sintassi CORRETTA. Assegniamo alla proprietà pubblica
-        // generata, scatenando la notifica per aggiornare la UI.
         BudgetItems = new ObservableCollection<BudgetStatus>(budgets);
+
+        // --- INIZIO MODIFICA (PEZZO 5) ---
+        // 3. Aggiorniamo il "sensore" ogni volta che carichiamo i dati.
+        HasBudgets = BudgetItems.Any();
+        // --- FINE MODIFICA ---
     }
+
+    // --- INIZIO MODIFICA (PEZZO 5) ---
+    // 4. Creiamo il comando per il nostro nuovo "motore" di clonazione.
+    [RelayCommand]
+    private async Task CloneLastMonthBudgetsAsync()
+    {
+        var now = DateTime.Now;
+        // Chiamiamo il motore che abbiamo costruito
+        await budgetService.CloneLastMonthBudgetsAsync(now.Year, now.Month);
+
+        // Dopo aver clonato, ricarichiamo la lista per aggiornare la UI.
+        // Questo è un costrutto solido e a prova di bug.
+        await LoadBudgetsAsync();
+    }
+    // --- FINE MODIFICA ---
 
     [RelayCommand]
     private async Task GoToAddBudgetAsync()
@@ -44,9 +67,8 @@ public partial class BudgetViewModel(IBudgetService budgetService, IAlertService
     private async Task GoToEditBudgetAsync(BudgetStatus budgetStatus)
     {
         if (budgetStatus == null) return;
-
-        var amountString = budgetStatus.BudgetedAmount.ToString(CultureInfo.InvariantCulture);
-        await Shell.Current.GoToAsync($"{nameof(AddBudgetPage)}?Category={budgetStatus.Category}&Amount={amountString}");
+        var amountAsString = budgetStatus.BudgetedAmount.ToString(CultureInfo.InvariantCulture);
+        await Shell.Current.GoToAsync($"{nameof(AddBudgetPage)}?Category={Uri.EscapeDataString(budgetStatus.Category)}&Amount={amountAsString}");
     }
 
     [RelayCommand]

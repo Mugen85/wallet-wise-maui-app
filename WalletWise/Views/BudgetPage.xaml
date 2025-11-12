@@ -1,12 +1,12 @@
 <!-- in WalletWise/Views/BudgetPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WalletWise.Views.BudgetPage"
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
-             xmlns:services="clr-namespace:WalletWise.Services"
+             x:Class="WalletWise.Views.BudgetPage"
              x:DataType="viewmodels:BudgetViewModel"
              Title="Budget"
              BackgroundColor="{StaticResource PageBackground}">
+
     <Grid RowDefinitions="Auto, *, Auto" Padding="10">
 
         <Label Grid.Row="0"
@@ -16,15 +16,48 @@
                HorizontalOptions="Center"
                Margin="0,10,0,20"/>
 
-        
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1"
+                    IsVisible="{Binding HasBudgets}">
             <VerticalStackLayout x:Name="BudgetListContainer" Spacing="10" />
         </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Fill"
+                             Spacing="15"
+                             Padding="20"
+                             IsVisible="{Binding HasBudgets, Converter={StaticResource InvertedBoolConverter}}">
+
+            <Label
+                Text="Nessun budget impostato per questo mese."
+                HorizontalOptions="Center"
+                Style="{StaticResource CardTitle}"
+                HorizontalTextAlignment="Center"/>
+
+            <Label
+                Text="Vuoi crearne di nuovi o copiare quelli del mese scorso?"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                TextColor="{StaticResource SecondaryText}"/>
+
+            <Button
+                Text="Copia budget dal mese scorso"
+                Command="{Binding CloneLastMonthBudgetsCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Margin="0,20,0,0"/>
+
+            <Button
+                Text="Crea un nuovo budget"
+                Command="{Binding GoToAddBudgetCommand}"
+                Style="{StaticResource SecondaryButton}"/>
+
+        </VerticalStackLayout>
 
         <Button Grid.Row="2"
                 Text="Aggiungi Budget"
                 Command="{Binding GoToAddBudgetCommand}"
                 Style="{StaticResource PrimaryButton}"
-                Margin="10"/>
+                Margin="10"
+                IsVisible="{Binding HasBudgets}"/>
     </Grid>
 </ContentPage>

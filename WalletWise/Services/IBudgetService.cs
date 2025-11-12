@@ -30,4 +30,9 @@ public interface IBudgetService
     Task<List<BudgetStatus>> GetBudgetStatusForMonthAsync(int year, int month);
     Task SaveBudgetAsync(Budget budget);
     Task DeleteBudgetAsync(string category, int year, int month);
+
+    // --- INIZIO MODIFICA ---
+    // Aggiungiamo la "promessa" che il nostro servizio saprà clonare i budget.
+    Task CloneLastMonthBudgetsAsync(int currentYear, int currentMonth);
+    // --- FINE MODIFICA ---
 }

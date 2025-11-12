@@ -98,4 +98,67 @@ public class BudgetService(IDbContextFactory<WalletWiseDbContext> contextFactory
             await context.SaveChangesAsync();
         }
     }
+
+    // --- INIZIO MODIFICA ---
+    // Questo è il "motore" che esegue la clonazione.
+    public async Task CloneLastMonthBudgetsAsync(int currentYear, int currentMonth)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        // 1. Calcolo solido del mese precedente (gestisce anche gennaio)
+        var lastMonthDate = new DateTime(currentYear, currentMonth, 1).AddMonths(-1);
+        int lastMonth = lastMonthDate.Month;
+        int lastMonthYear = lastMonthDate.Year;
+
+        // 2. Troviamo i budget del mese scorso.
+        var lastMonthBudgets = await context.Budgets
+            .Where(b => b.Year == lastMonthYear && b.Month == lastMonth)
+            .AsNoTracking() // Leggiamo i dati senza "bloccarli"
+            .ToListAsync();
+
+        if (!lastMonthBudgets.Any())
+        {
+            return; // Niente da clonare
+        }
+
+        // 3. Troviamo i budget GIÀ ESISTENTI per il mese corrente
+        // per evitare di creare duplicati.
+        var currentBudgets = await context.Budgets
+            .Where(b => b.Year == currentYear && b.Month == currentMonth)
+            .ToListAsync();
+
+        // Creiamo un "elenco" (HashSet) delle categorie già presenti,
+        // usando un controllo solido (ToUpper) che ignora maiuscole/minuscole.
+        var existingCategories = currentBudgets
+            .Select(b => b.Category.ToUpperInvariant())
+            .ToHashSet();
+
+        var newBudgetsToCreate = new List<Budget>();
+
+        // 4. Costruiamo i nuovi budget
+        foreach (var oldBudget in lastMonthBudgets)
+        {
+            // Aggiungiamo il nuovo budget solo se la categoria
+            // non esiste GIA' nel mese corrente.
+            if (!existingCategories.Contains(oldBudget.Category.ToUpperInvariant()))
+            {
+                newBudgetsToCreate.Add(new Budget
+                {
+                    Category = oldBudget.Category,
+                    Amount = oldBudget.Amount, // Copiamo l'importo vecchio
+                    Month = currentMonth,
+                    Year = currentYear
+                });
+            }
+        }
+
+        // 5. Salvataggio solido e performante
+        // Aggiungiamo tutti i nuovi budget in un colpo solo.
+        if (newBudgetsToCreate.Any())
+        {
+            await context.Budgets.AddRangeAsync(newBudgetsToCreate);
+            await context.SaveChangesAsync();
+        }
+    }
+    // --- FINE MODIFICA ---
 }
