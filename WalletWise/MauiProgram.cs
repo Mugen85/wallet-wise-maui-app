@@ -34,6 +34,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ITransactionService, TransactionService>();     
         builder.Services.AddSingleton<IBudgetService, BudgetService>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
+        
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<BudgetViewModel>();        
@@ -45,6 +46,7 @@ public static class MauiProgram
         builder.Services.AddTransient<TransactionsViewModel>();
         builder.Services.AddTransient<OnboardingViewModel>();
         builder.Services.AddTransient<OnboardingPage>();
+        
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
@@ -54,6 +56,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddBudgetPage>();
         builder.Services.AddTransient<AddTransactionPage>();
         builder.Services.AddTransient<TransactionsPage>();
+       
 
         var app = builder.Build();
 

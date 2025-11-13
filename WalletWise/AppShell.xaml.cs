@@ -15,6 +15,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
         Routing.RegisterRoute(nameof(AddBudgetPage), typeof(AddBudgetPage));
         // NOTA: Non registriamo più OnboardingPage qui.
+       
     }
 
     protected override async void OnAppearing()

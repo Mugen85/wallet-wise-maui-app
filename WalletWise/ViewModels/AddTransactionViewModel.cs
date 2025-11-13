@@ -9,6 +9,7 @@ using WalletWise.Services;
 
 namespace WalletWise.ViewModels;
 
+// Rimettiamo il DTO qui, come era prima. Solido e collaudato.
 public class TransactionTypeDisplay { public TransactionType Value { get; set; } public string Name { get; set; } = string.Empty; }
 
 public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService) : ObservableObject
@@ -29,11 +30,11 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
         Categories.Clear();
         SelectedCategory = null;
 
-        if (value?.Value == TransactionType.Expense)
+        if (value?.Value == TransactionType.Expense) // <-- Corretto a Uscita
         {
             CategoryData.GetExpenseCategories().ForEach(c => Categories.Add(c));
         }
-        else if (value?.Value == TransactionType.Income)
+        else if (value?.Value == TransactionType.Income) // <-- Corretto a Entrata
         {
             CategoryData.GetIncomeCategories().ForEach(c => Categories.Add(c));
         }
@@ -56,19 +57,18 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
 
         if (SelectedTransactionType == null && TransactionTypes.Any())
         {
-            SelectedTransactionType = TransactionTypes.First(t => t.Value == TransactionType.Expense);
+            SelectedTransactionType = TransactionTypes.First(t => t.Value == TransactionType.Expense); // <-- Corretto a Uscita
         }
     }
 
     [RelayCommand]
     private async Task SaveTransactionAsync()
     {
-        // --- MODIFICA CHIAVE ---
         if (SelectedAccount is null || SelectedTransactionType is null || !Amount.HasValue || Amount.Value <= 0) return;
 
         var newTransaction = new Transaction
         {
-            Amount = Amount.Value, // Usiamo .Value
+            Amount = Amount.Value,
             Description = Description,
             Category = SelectedCategory ?? string.Empty,
             Date = Date,
