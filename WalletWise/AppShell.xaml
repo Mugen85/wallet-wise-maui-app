@@ -29,9 +29,15 @@
         </Tab>
         <Tab Title="Budget" Icon="budget_icon.png">
             <ShellContent
-                Title="Budget Mensile"
+                Title="Budget mensile"
                 ContentTemplate="{DataTemplate views:BudgetPage}"
                 Route="BudgetPage" />   
+        </Tab>
+        <Tab Title="Transazioni Ricorrenti" Icon="pilota_icon.png">
+            <ShellContent
+                Title="Le tue transazioni ricorrenti"
+                ContentTemplate="{DataTemplate views:RecurringTransactionsPage}"
+                Route="RecurringTransactionsPage" />
         </Tab>
     </TabBar>
 </Shell>

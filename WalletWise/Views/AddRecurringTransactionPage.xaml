@@ -1,0 +1,95 @@
+<!-- in WalletWise/Views/AddRecurringTransactionPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             x:Class="WalletWise.Views.AddRecurringTransactionPage"
+             x:DataType="viewmodels:AddRecurringTransactionViewModel"
+             Title="Nuovo Pilota Automatico"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10"
+                  IsVisible="{OnIdiom Desktop=True, Default=False}">
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Conto" FontAttributes="Bold" />
+                    <Picker ItemsSource="{Binding Accounts}"
+                            SelectedItem="{Binding SelectedAccount}"
+                            ItemDisplayBinding="{Binding Name}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="Tipo" FontAttributes="Bold" />
+                    <Picker ItemsSource="{Binding TransactionTypes}"
+                            SelectedItem="{Binding SelectedTransactionType}"
+                            ItemDisplayBinding="{Binding Name}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" Spacing="5">
+                    <Label Text="Importo" FontAttributes="Bold" />
+                    <Entry Text="{Binding Amount}"
+                           Placeholder="0,00"
+                           Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout Spacing="15"
+                                 IsVisible="{OnIdiom Desktop=False, Default=True}">
+                <Label Text="Conto" FontAttributes="Bold" />
+                <Picker Title="Seleziona un conto"
+                        ItemsSource="{Binding Accounts}"
+                        SelectedItem="{Binding SelectedAccount}"
+                        ItemDisplayBinding="{Binding Name}" />
+
+                <Label Text="Tipo" FontAttributes="Bold" />
+                <Picker Title="Seleziona tipo"
+                        ItemsSource="{Binding TransactionTypes}"
+                        SelectedItem="{Binding SelectedTransactionType}"
+                        ItemDisplayBinding="{Binding Name}" />
+
+                <Label Text="Importo" FontAttributes="Bold" />
+                <Entry Text="{Binding Amount}"
+                       Placeholder="0,00"
+                       Keyboard="Numeric" />
+            </VerticalStackLayout>
+
+            <Label Text="Descrizione" FontAttributes="Bold" />
+            <Entry Text="{Binding Description}"
+                   Placeholder="Es. Stipendio, Affitto..." />
+
+            <Label Text="Categoria" FontAttributes="Bold" />
+            <Picker Title="Seleziona categoria"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    ItemDisplayBinding="{Binding .}" />
+
+            <Label Text="Ogni quanto?" FontAttributes="Bold" />
+            <Picker Title="Seleziona frequenza"
+                    ItemsSource="{Binding Frequencies}"
+                    SelectedItem="{Binding SelectedFrequency}"
+                    ItemDisplayBinding="{Binding Name}" />
+
+            <VerticalStackLayout Spacing="5" IsVisible="{Binding IsMonthly}">
+                <Label Text="Giorno del mese" FontAttributes="Bold" />
+                <Picker Title="Seleziona giorno"
+                        ItemsSource="{Binding DaysOfMonth}"
+                        SelectedItem="{Binding SelectedDayOfMonth}" />
+            </VerticalStackLayout>
+
+            <Label Text="Data di Inizio" FontAttributes="Bold" />
+            <DatePicker Date="{Binding StartDate}" />
+
+            <Button Text="Salva Pilota Automatico"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Margin="0,20,0,0" />
+
+            <Button Text="Annulla"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource SecondaryButton}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

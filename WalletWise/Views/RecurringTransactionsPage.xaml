@@ -1,0 +1,22 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
+             x:Class="WalletWise.Views.RecurringTransactionsPage"
+             x:DataType="viewmodels:RecurringTransactionsViewModel"
+             Title="Transazioni Ricorrenti"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid RowDefinitions="*, Auto" Padding="10">
+
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout x:Name="RecurringListContainer" Spacing="10" />
+        </ScrollView>
+
+        <Button Grid.Row="1"
+                Text="Aggiungi Pilota Automatico"
+                Command="{Binding GoToAddCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Margin="10"/>
+    </Grid>
+</ContentPage>

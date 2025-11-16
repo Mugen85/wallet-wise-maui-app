@@ -1,6 +1,7 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
 using WalletWise.Persistence.Data;
+using WalletWise.Persistence.Models;
 using WalletWise.Services;
 using WalletWise.ViewModels;
 using WalletWise.Views;
@@ -34,7 +35,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ITransactionService, TransactionService>();     
         builder.Services.AddSingleton<IBudgetService, BudgetService>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
-        
+        builder.Services.AddSingleton<IRecurringTransactionService, RecurringTransactionService>();
+
 
         // Registrazione dei ViewModel
         builder.Services.AddTransient<BudgetViewModel>();        
@@ -46,7 +48,9 @@ public static class MauiProgram
         builder.Services.AddTransient<TransactionsViewModel>();
         builder.Services.AddTransient<OnboardingViewModel>();
         builder.Services.AddTransient<OnboardingPage>();
-        
+        builder.Services.AddTransient<RecurringTransactionsViewModel>();
+        builder.Services.AddTransient<AddRecurringTransactionViewModel>();
+
 
         // Registrazione delle View
         builder.Services.AddTransient<AccountsPage>();
@@ -56,7 +60,9 @@ public static class MauiProgram
         builder.Services.AddTransient<AddBudgetPage>();
         builder.Services.AddTransient<AddTransactionPage>();
         builder.Services.AddTransient<TransactionsPage>();
-       
+        builder.Services.AddTransient<RecurringTransactionsPage>();
+        builder.Services.AddTransient<AddRecurringTransactionPage>();
+
 
         var app = builder.Build();
 

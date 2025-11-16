@@ -9,8 +9,6 @@ using WalletWise.Services;
 
 namespace WalletWise.ViewModels;
 
-// Rimettiamo il DTO qui, come era prima. Solido e collaudato.
-public class TransactionTypeDisplay { public TransactionType Value { get; set; } public string Name { get; set; } = string.Empty; }
 
 public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService) : ObservableObject
 {
