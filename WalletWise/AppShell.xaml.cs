@@ -35,7 +35,7 @@ public partial class AppShell : Shell
         _isStartupCheckDone = true;
 
         // --- RESET PER COLLAUDO (DA TOGLIERE DOPO) ---
-        Preferences.Remove("has_completed_onboarding");
+        //Preferences.Remove("has_completed_onboarding");
         // ---------------------------------------------
 
         bool hasCompletedOnboarding = Preferences.Get("has_completed_onboarding", false);
