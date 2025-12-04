@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletWise.Tests", "WalletWise.Tests\WalletWise.Tests.csproj", "{2FEA0F43-84EE-4E17-9C20-A53C83EFA815}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03DB069F-9371-41C1-A7C5-E6B5B82251BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FEA0F43-84EE-4E17-9C20-A53C83EFA815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FEA0F43-84EE-4E17-9C20-A53C83EFA815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FEA0F43-84EE-4E17-9C20-A53C83EFA815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FEA0F43-84EE-4E17-9C20-A53C83EFA815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
