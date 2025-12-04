@@ -1,5 +1,6 @@
 ﻿// MauiProgram.cs
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WalletWise.Persistence.Data;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
@@ -10,6 +11,9 @@ namespace WalletWise;
 
 public static class MauiProgram
 {
+
+    public static IServiceProvider? Services { get; private set; }
+
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -64,7 +68,16 @@ public static class MauiProgram
         builder.Services.AddTransient<AddRecurringTransactionPage>();
 
 
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
         var app = builder.Build();
+
+        // --- INIZIO MODIFICA CHIRURGICA ---
+        // Memorizziamo l'officina costruita nella nostra
+        // proprietà statica, rendendola disponibile.
+        Services = app.Services;
+        // --- FINE MODIFICA CHIRURGICA ---
 
         // 3. Applica le migrazioni DOPO aver costruito l'app
         // Questo è il punto più sicuro per interagire con i servizi.

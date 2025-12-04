@@ -13,6 +13,7 @@
     <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
     <Color x:Key="TextColor">#222222</Color>
     <Color x:Key="MutedTextColor">#777777</Color>
+    <Color x:Key="PageBackground">#F5F5F5</Color>
     
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>

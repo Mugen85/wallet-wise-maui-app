@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;

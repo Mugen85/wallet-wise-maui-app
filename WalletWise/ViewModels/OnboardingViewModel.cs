@@ -6,51 +6,50 @@ using WalletWise.Services;
 
 namespace WalletWise.ViewModels;
 
-public partial class OnboardingViewModel(IAccountService accountService) : ObservableObject
+// --- MODIFICA CHIRURGICA 1: Iniezione dell'AlertService ---
+// Aggiungiamo il nostro servizio collaudato per la
+// notifica all'utente. Sostanza e Usabilità.
+public partial class OnboardingViewModel(
+    IAccountService accountService,
+    IAlertService alertService) : ObservableObject
 {
     [ObservableProperty]
     private string _accountName = string.Empty;
 
-    // Usiamo decimal? (nullable) per gestire in modo robusto
-    // un Entry che può essere vuoto, come abbiamo imparato.
-    // È la soluzione solida.
     [ObservableProperty]
     private decimal? _initialBalance;
 
     [RelayCommand]
     private async Task StartAsync()
     {
-        // 1. Validazione (Sostanza prima di tutto)
-        // Ci assicuriamo che i dati siano validi prima di procedere.
+        // --- INIZIO MODIFICA (PEZZO 72.3) ---
+        // Usiamo l'attrezzo GIUSTO (ShowAlertAsync)
+        // invece di quello sbagliato (ShowConfirmationAsync).
         if (string.IsNullOrWhiteSpace(AccountName) || !InitialBalance.HasValue || InitialBalance.Value < 0)
         {
-            // In futuro, potremmo mostrare un messaggio all'utente.
-            // Per ora, un blocco solido è sufficiente.
+            await alertService.ShowAlertAsync("Dati Mancanti",
+                "Per favore, inserisci un nome valido per il conto e un saldo iniziale (anche 0).");
             return;
         }
+        // --- FINE MODIFICA ---
 
-        // 2. Creazione del Conto
+        // 2. Creazione del Conto (Questo era già solido)
         var newAccount = new Account
         {
             Name = AccountName,
             InitialBalance = InitialBalance.Value,
-            Type = AccountType.StipendioSpese // Impostiamo un tipo di default solido
+            Type = AccountType.StipendioSpese
         };
         await accountService.AddAccountAsync(newAccount);
 
-        // 3. Impostiamo il "Flag"
-        // Questo è il pezzo chiave. Diciamo all'app di non mostrare
-        // più questa pagina in futuro.
+        // 3. Impostiamo il "Flag" (Questo era già solido)
         Preferences.Set("has_completed_onboarding", true);
 
-        // 4. Navigazione
-        // Abbiamo finito. Portiamo l'utente al cuore dell'app.
-        // --- INIZIO MODIFICA (PEZZO 5) ---
-        // Usiamo "//" invece di "//MainPage".
-        // Questo è il comando "assoluto" più robusto: significa
-        // "vai alla radice dell'app e carica la tua tab di default,
-        // qualunque essa sia". È la soluzione a prova di bug.
-        await Shell.Current.GoToAsync("//");
-        // --- FINE MODIFICA ---
+        // --- MODIFICA CHIRURGICA 3: Navigazione Solida ---
+        // Sostituiamo l'attrezzo sbagliato (GoToAsync)
+        // con l'attrezzo GIUSTO (PopModalAsync).
+        // Questo è il costrutto a prova di bug per
+        // chiudere una pagina Modale.
+        await Shell.Current.Navigation.PopModalAsync();
     }
 }
