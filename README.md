@@ -1,53 +1,60 @@
 # Wallet Wise
 
-**Un'app di finanza personale per dominare il caos, un commit alla volta.**
+Un'app di finanza personale per dominare il caos, un commit alla volta.
 
-📖 **[Leggi la timeline di sviluppo](DEVELOPMENT_TIMELINE.md)** - Il mio diario di bordo dettagliato del viaggio nello sviluppo di WalletWise
+Il mio obiettivo principale è crescere come montatore meccanico, ma questo progetto è la prova della mia filosofia nello sviluppo software: **la sostanza vince sull'apparenza**.
 
-## 🚀 La doppia sfida: crescita tecnica e personale
+## 🏍️ Il Nostro Biglietto da Visita: Usabilità e Sostanza
 
-Questo progetto è più di una semplice applicazione: è un campo di battaglia personale e professionale.
+Wallet Wise è progettato per essere facilmente utilizzabile anche da chi non sa nulla di finanza. L'architettura è stata costruita per garantire che l'app sia veloce, affidabile e che l'utente sia guidato in ogni fase.
 
-### La sfida tecnica
+## 🖼️ Anteprima Rapida
 
-Da sviluppatore che punta a diventare architetto software, la mia filosofia è semplice: **la crescita avviene fuori dalla comfort zone**. Non ho mai sviluppato un'app con **.NET MAUI** e questo progetto è la mia immersione totale. L'obiettivo è padroneggiare un framework moderno e multipiattaforma, non seguendo un tutorial, ma costruendo da zero una soluzione reale a un problema reale.
+### Onboarding (Primo Avvio)
 
-### La sfida personale
+![Screenshot Onboarding](docs/images/onboarding_screenshot.png)
 
-La verità? La mia gestione finanziaria è sempre stata caotica. Conti multipli, spese, piccoli investimenti... un disastro. Ho deciso di affrontare questa debolezza con l'arma più potente che ho: **il codice**. Wallet Wise nasce per risolvere i *miei* problemi, con un'ossessione per la semplicità e l'intuitività.
+L'utente è guidato a creare il primo conto senza vedere schermate vuote.
 
-Questo repository è il diario di bordo di questo duplice viaggio.
+### Flusso Principale
 
-## 🎯 Obiettivi del progetto
+![Flusso di lavoro rapido](docs/images/flow_demo.gif)
+
+Demo rapida di creazione conto, budget e transazione.
+
+## 🎯 Obiettivi e Funzionalità Attuali
 
 Niente fronzoli. Solo le funzioni essenziali per avere il controllo.
 
-* **📊 Dashboard chiara:** Una visione d'insieme del patrimonio netto, che distingua chiaramente tra liquidità e capitale investito.
-* **💳 Gestione multi-conto:** Tracciamento semplice di conti correnti, risparmi e investimenti.
-* **✍️ Inserimento rapido:** Un'interfaccia minimale per registrare entrate e uscite in pochi secondi.
-* **🏗️ Architettura solida:** Un'applicazione robusta, testabile e manutenibile, costruita su principi di clean code.
-* **📱 Esperienza multipiattaforma:** Un'unica codebase per un'esperienza nativa su Windows, Android e iOS.
+* ✅ **Onboarding Intuitivo (NEW)**: L'utente è guidato a creare il primo conto, evitando schermate vuote e intimidatorie. La logica di avvio è a prova di bug.
+* ✅ **Budgeting Solido**: I budget sono visualizzati con barre di progresso chiare e riutilizzano le impostazioni del mese precedente, rendendo l'app "intelligente" e riducendo il lavoro manuale.
+* ⏳ **Pilota Automatico (In Lavorazione)**: Infrastruttura completa per la gestione delle transazioni ricorrenti (stipendio, affitto, ecc.). Questo è il cuore della nostra usabilità futura.
+* 📊 **Dashboard chiara**: Una visione d'insieme del patrimonio netto.
+* 💳 **Gestione multi-conto**: Tracciamento semplice di conti correnti, risparmi e investimenti.
 
-## 💻 Stack tecnologico e architettura
+## 💻 Stack Tecnologico e Architettura (Sostanza)
 
-La qualità del software si fonda su scelte architetturali consapevoli.
+La qualità del software si fonda su scelte architetturali consapevoli che garantiscono manutenibilità e affidabilità.
 
-* **Framework:** **.NET MAUI** - Per lo sviluppo di ui native e multipiattaforma da un'unica base di codice C#.
-* **Linguaggio:** **C#** - Il cuore di tutta la logica di business e di presentazione.
-* **UI:** **XAML** - Per una definizione dichiarativa e pulita delle interfacce utente.
-* **Architettura:** **MVVM (Model-View-ViewModel)** - Per una separazione netta tra ui, logica e dati, garantendo testabilità e manutenibilità.
-* **Database:** **SQLite** - Motore di database leggero e serverless, ideale per lo storage locale.
-* **Data Access:** **Entity Framework Core** - L'orm di riferimento per interagire con il database in modo astratto e object-oriented.
+* **Framework**: .NET MAUI - Per lo sviluppo di UI native e multipiattaforma.
+* **Architettura**: MVVM con Community Toolkit MVVM - Separazione netta tra UI, logica e dati.
+* **Database**: SQLite + Entity Framework Core.
+* **Costrutti a Prova di Bug**: Utilizzo massimo di Dependency Injection per l'iniezione dei ViewModel e adozione di layout generati in Code-Behind (C#) per le liste complesse, bypassando noti bug di rendering XAML e garantendo la stabilità.
 
-## 📈 Stato del progetto: in corso
+## 📈 Stato del progetto: In Corso
 
 * [x] Setup iniziale del progetto e della struttura delle cartelle.
-* [x] Integrazione con Git e configurazione del repository.
-* [x] Definizione dei model di base (`Account`, `Transaction`).
-* [x] Configurazione del database con Entity Framework Core.
-* [ ] **In corso:** Sviluppo delle prime view e viewmodel (Gestione Conti).
-* [ ] **In corso:** Implementazione della dashboard principale.
+* [x] Definizione dei model di base (`Account`, `Transaction`, `Budget`, `RecurringTransaction`).
+* [x] Configurazione del database con Entity Framework Core (Migrazioni completate).
+* [x] Implementazione dell'Onboarding e del sistema di avvio a prova di bug.
+* [x] Implementazione della Dashboard principale e della visualizzazione dei Budget con barre di progresso.
+* [x] Aggiunta dell'infrastruttura di Unit Testing (xUnit).
+* [x] **Completato**: Sviluppo della funzionalità "Pilota Automatico" (Logica di salvataggio e visualizzazione).
+
+## 🤝 Contributi e Feedback
+
+Questo progetto è un'avventura di apprendimento e crescita. Ogni feedback, suggerimento o critica costruttiva è essenziale per migliorare.
 
 ---
 
-*Questo progetto è un'avventura di apprendimento. Ogni feedback, suggerimento o critica costruttiva non è solo benvenuto, ma è essenziale. Grazie!*
+**Sostanza sopra tutto. Sempre.**
