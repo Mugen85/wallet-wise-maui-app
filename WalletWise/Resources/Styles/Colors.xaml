@@ -4,17 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
-
+    <!-- COLORI BASE (Invariati) -->
     <Color x:Key="Red">#FF0000</Color>
     <Color x:Key="PrimaryColor">#512BD4</Color>
     <Color x:Key="SecondaryColor">#DFD8F7</Color>
-    <Color x:Key="PageBackgroundColor">#F5F5F5</Color>
+
+    <!-- FIX: Rimosso PageBackgroundColor fisso, useremo le varianti sotto -->
     <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
     <Color x:Key="TextColor">#222222</Color>
     <Color x:Key="MutedTextColor">#777777</Color>
-    <Color x:Key="PageBackground">#F5F5F5</Color>
-    
+
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
@@ -38,12 +37,29 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
+    <!-- COLORI SEMANTICI (Per Dark/Light Mode) -->
+    <Color x:Key="TextPrimaryLight">Black</Color>
+    <Color x:Key="TextPrimaryDark">White</Color>
+
+    <Color x:Key="TextSecondaryLight">Gray</Color>
+    <Color x:Key="TextSecondaryDark">#A0A0A0</Color>
+
+    <Color x:Key="CardBackgroundLight">White</Color>
+    <Color x:Key="CardBackgroundDark">#1F1F1F</Color>
+
+    <Color x:Key="InputBackgroundLight">#F5F5F5</Color>
+    <Color x:Key="InputBackgroundDark">#333333</Color>
+
+    <!-- NUOVO: Sfondo della Pagina adattivo -->
+    <Color x:Key="PageBackgroundLight">#F5F5F5</Color>
+    <Color x:Key="PageBackgroundDark">#121212</Color>
+
+    <!-- BRUSHES (Invariati) -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
-
     <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
     <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
     <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
@@ -52,4 +68,5 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
 </ResourceDictionary>

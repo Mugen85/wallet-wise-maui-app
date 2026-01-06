@@ -4,42 +4,50 @@ Un'app di finanza personale per dominare il caos, un commit alla volta.
 
 Il mio obiettivo principale è crescere come montatore meccanico, ma questo progetto è la prova della mia filosofia nello sviluppo software: **la sostanza vince sull'apparenza**.
 
-## 🏍️ Il Nostro Biglietto da Visita: Usabilità e Sostanza
+## 🏍Il mio biglietto da visita: usabilità e sostanza
 
 Wallet Wise è progettato per essere facilmente utilizzabile anche da chi non sa nulla di finanza. L'architettura è stata costruita per garantire che l'app sia veloce, affidabile e che l'utente sia guidato in ogni fase.
 
-## 🖼️ Anteprima Rapida
+## 📱 Prova l'app su Android
 
-### Onboarding (Primo Avvio)
+Vuoi toccare con mano la "sostanza"? Scarica l'ultima versione dell'app direttamente sul tuo smartphone.
+
+👉 [**SCARICA L'APK (ultima versione)**](https://github.com/Mugen85/wallet-wise-maui-app/releases/latest)
+
+**Nota per l'installazione:** poiché questa è un'app demo e non proviene dal Google Play Store, il tuo telefono potrebbe chiederti di autorizzare l'installazione da "Origini sconosciute" o dal browser. È sicuro: il codice è tutto qui, open source!
+
+## 🖼️ Anteprima rapida
+
+### Onboarding (primo avvio)
 
 ![Screenshot Onboarding](docs/images/onboarding_screenshot.png)
 
 L'utente è guidato a creare il primo conto senza vedere schermate vuote.
 
-### Flusso Principale
+### Flusso principale
 
 ![Flusso di lavoro rapido](docs/images/flow_demo.gif)
 
 Demo rapida di creazione conto, budget e transazione.
 
-## 🎯 Obiettivi e Funzionalità Attuali
+## 🎯 Obiettivi e funzionalità attuali
 
 Niente fronzoli. Solo le funzioni essenziali per avere il controllo.
 
-* ✅ **Onboarding Intuitivo (NEW)**: L'utente è guidato a creare il primo conto, evitando schermate vuote e intimidatorie. La logica di avvio è a prova di bug.
-* ✅ **Budgeting Solido**: I budget sono visualizzati con barre di progresso chiare e riutilizzano le impostazioni del mese precedente, rendendo l'app "intelligente" e riducendo il lavoro manuale.
-* ⏳ **Pilota Automatico (In Lavorazione)**: Infrastruttura completa per la gestione delle transazioni ricorrenti (stipendio, affitto, ecc.). Questo è il cuore della nostra usabilità futura.
-* 📊 **Dashboard chiara**: Una visione d'insieme del patrimonio netto.
-* 💳 **Gestione multi-conto**: Tracciamento semplice di conti correnti, risparmi e investimenti.
+* ✅ **Onboarding intuitivo (NEW)**: l'utente è guidato a creare il primo conto, evitando schermate vuote e intimidatorie. La logica di avvio è a prova di bug.
+* ✅ **Budgeting solido**: i budget sono visualizzati con barre di progresso chiare e riutilizzano le impostazioni del mese precedente, rendendo l'app "intelligente" e riducendo il lavoro manuale.
+* ✅ **Pilota Automatico (In Lavorazione)**: infrastruttura completa per la gestione delle transazioni ricorrenti (stipendio, affitto, ecc.). Questo è il cuore della nostra usabilità futura.
+* 📊 **Dashboard chiara**: una visione d'insieme del patrimonio netto.
+* 💳 **Gestione multi-conto**: tracciamento semplice di conti correnti, risparmi e investimenti.
 
-## 💻 Stack Tecnologico e Architettura (Sostanza)
+## 💻 Stack tecnologico e architettura (sostanza)
 
 La qualità del software si fonda su scelte architetturali consapevoli che garantiscono manutenibilità e affidabilità.
 
 * **Framework**: .NET MAUI - Per lo sviluppo di UI native e multipiattaforma.
 * **Architettura**: MVVM con Community Toolkit MVVM - Separazione netta tra UI, logica e dati.
 * **Database**: SQLite + Entity Framework Core.
-* **Costrutti a Prova di Bug**: Utilizzo massimo di Dependency Injection per l'iniezione dei ViewModel e adozione di layout generati in Code-Behind (C#) per le liste complesse, bypassando noti bug di rendering XAML e garantendo la stabilità.
+* **Costrutti a Prova di Bug**: utilizzo massimo di Dependency Injection per l'iniezione dei ViewModel e adozione di layout generati in Code-Behind (C#) per le liste complesse, bypassando noti bug di rendering XAML e garantendo la stabilità.
 
 ## 📈 Stato del progetto: In Corso
 

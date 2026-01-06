@@ -3,8 +3,7 @@
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
              x:Class="WalletWise.Views.RecurringTransactionsPage"
              x:DataType="viewmodels:RecurringTransactionsViewModel"
-             Title="Transazioni Ricorrenti"
-             BackgroundColor="{StaticResource PageBackground}">
+             Title="Transazioni Ricorrenti">
 
     <Grid RowDefinitions="*, Auto" Padding="10">
 

@@ -4,8 +4,7 @@
              x:Class="WalletWise.Views.OnboardingPage"
              x:DataType="viewmodels:OnboardingViewModel"
              Title="Benvenuto in Wallet Wise"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource PageBackground}">
+             Shell.NavBarIsVisible="False">
 
     <VerticalStackLayout Spacing="15"
                          Padding="30"
@@ -14,7 +13,7 @@
 
         <Label
             Text="Benvenuto!"
-            Style="{StaticResource CardTitle}"
+           
             HorizontalOptions="Center"
             FontSize="32"/>
 
@@ -24,19 +23,27 @@
             HorizontalTextAlignment="Center"
             TextColor="{StaticResource SecondaryText}"/>
 
-        <Frame Style="{StaticResource InfoCard}" Padding="20" Margin="0,20,0,0">
+        <Frame Style="{StaticResource InfoCard}" 
+       Padding="20" 
+       Margin="0,20,0,0">
+
             <VerticalStackLayout Spacing="10">
-                <Label Text="Nome Conto" FontAttributes="Bold" />
+
+                <Label Text="Nome conto" 
+               FontAttributes="Bold" />
+
                 <Entry Text="{Binding AccountName}"
-                       Placeholder="Es. Conto Corrente" />
-
-                <Label Text="Saldo Iniziale" FontAttributes="Bold" Margin="0,10,0,0" />
-
-        
-                <Entry Text="{Binding InitialBalance}"
-                       Placeholder="0,00"
-                       Keyboard="Numeric" />
+               Placeholder="Es. Conto corrente"
+               Margin="0,0,0,10" />
                 
+                <Label Text="Saldo iniziale" 
+               FontAttributes="Bold" 
+               Margin="0,10,0,0" />
+
+                <Entry Text="{Binding InitialBalance}"
+               Placeholder="0,00"
+               Keyboard="Numeric" />
+
             </VerticalStackLayout>
         </Frame>
 

@@ -4,8 +4,7 @@
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
              x:Class="WalletWise.Views.AddRecurringTransactionPage"
              x:DataType="viewmodels:AddRecurringTransactionViewModel"
-             Title="Nuovo Pilota Automatico"
-             BackgroundColor="{StaticResource PageBackground}">
+             Title="Nuovo Pilota Automatico">
 
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">

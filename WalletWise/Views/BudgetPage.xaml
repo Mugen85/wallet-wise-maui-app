@@ -4,8 +4,7 @@
              xmlns:viewmodels="clr-namespace:WalletWise.ViewModels"
              x:Class="WalletWise.Views.BudgetPage"
              x:DataType="viewmodels:BudgetViewModel"
-             Title="Budget"
-             BackgroundColor="{StaticResource PageBackground}">
+             Title="Budget">
 
     <Grid RowDefinitions="Auto, *, Auto" Padding="10">
 
