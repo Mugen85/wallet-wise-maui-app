@@ -10,8 +10,9 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:StringDecimalConverter x:Key="StringDecimalConverter" />
+            <converters:StringDecimalConverter x:Key="DecimalConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

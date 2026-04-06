@@ -22,9 +22,12 @@
 
                             <!-- Dettagli del conto a sinistra -->
                             <StackLayout Grid.Column="0" >
-                                <Label Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Text="{Binding Type, Converter={StaticResource EnumConverter}}" />
-                                <Label Text="{Binding CurrentBalance, StringFormat='Saldo Attuale: {0:C}'}" />
+                                <Label Text="{Binding Name}" FontAttributes="Bold" 
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="{Binding Type, Converter={StaticResource EnumConverter}}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="{Binding CurrentBalance, StringFormat='Saldo Attuale: {0:C}'}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
                             </StackLayout>
 
                             <!-- Bottone Elimina a destra -->

@@ -79,13 +79,20 @@ public static class MauiProgram
         Services = app.Services;
         // --- FINE MODIFICA CHIRURGICA ---
 
-        // 3. Applica le migrazioni DOPO aver costruito l'app
-        // Questo è il punto più sicuro per interagire con i servizi.
-        // --- INIZIO MODIFICA 3: Aggiorniamo la logica di migrazione ---
-        var dbContextFactory = app.Services.GetRequiredService<IDbContextFactory<WalletWiseDbContext>>();
-        using (var dbContext = dbContextFactory.CreateDbContext())
+        try
         {
-            dbContext.Database.Migrate();
+            FileLogger.Log("App avviata");
+            var dbContextFactory = app.Services.GetRequiredService<IDbContextFactory<WalletWiseDbContext>>();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                FileLogger.Log("DbContext creato, avvio migrazione...");
+                dbContext.Database.Migrate();
+                FileLogger.Log("Migrazione completata");
+            }
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"ERRORE AVVIO: {ex}");
         }
 
         return app;

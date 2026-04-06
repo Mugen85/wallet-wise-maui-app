@@ -1,75 +1,115 @@
-﻿// in ViewModels/AddAccountViewModel.cs
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Reflection;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
+// Assicurati di avere il namespace corretto per Shell (Microsoft.Maui.Controls) se non è globale
 
 namespace WalletWise.ViewModels;
 
-public class AccountTypeDisplay
+// 1. IL WRAPPER UI (Unica fonte di verità per il Picker)
+public class AccountTypeDisplayModel
 {
-    public AccountType Value { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public AccountType Value { get; init; }
+    public string Name { get; init; } = string.Empty;
+
+    // L'override vitale per bypassare il Trimmer in Release Android
+    public override string ToString() => Name;
 }
 
-public partial class AddAccountViewModel(IAccountService accountService) : ObservableObject
+// 2. IL VIEWMODEL
+public partial class AddAccountViewModel : ObservableObject
 {
-    private readonly IAccountService _accountService = accountService;
+    private readonly IAccountService _accountService;
 
+    // --- PROPRIETÀ BINDATE ALLA UI ---
+    // Il Toolkit genererà in automatico le proprietà pubbliche Name, InitialBalance e SelectedAccountType.
+    // In questo modo il tuo XAML non deve cambiare di una virgola.
+
+    [ObservableProperty]
     private string _name = string.Empty;
-    public string Name { get => _name; set => SetProperty(ref _name, value); }
 
-    private decimal _initialBalance;
-    public decimal InitialBalance { get => _initialBalance; set => SetProperty(ref _initialBalance, value); }
+    [ObservableProperty]
+    private AccountTypeDisplayModel? _selectedAccountType;
 
-    private AccountTypeDisplay? _selectedAccountType;
-    public AccountTypeDisplay? SelectedAccountType { get => _selectedAccountType; set => SetProperty(ref _selectedAccountType, value); }
+    public ObservableCollection<AccountTypeDisplayModel> AccountTypes { get; } = [];
 
-    public ObservableCollection<AccountTypeDisplay> AccountTypes { get; } = [];
+    // Costruttore
+    public AddAccountViewModel(IAccountService accountService)
+    {
+        _accountService = accountService;
+    }
 
     [RelayCommand]
     private void LoadAccountTypes()
     {
-        if (AccountTypes.Any()) return; // Esegui solo una volta
-
-        var types = System.Enum.GetValues(typeof(AccountType))
-                                 .Cast<AccountType>()
-                                 .Select(at => new AccountTypeDisplay { Value = at, Name = GetEnumDescription(at) });
-
-        foreach (var type in types)
+        try
         {
-            AccountTypes.Add(type);
+            FileLogger.Log("AddAccountViewModel: LoadAccountTypes avviato");
+
+            if (AccountTypes.Count > 0) return;
+
+            var types = Enum.GetValues<AccountType>()
+                            .Select(at => new AccountTypeDisplayModel
+                            {
+                                Value = at,
+                                Name = GetEnumDescription(at)
+                            });
+
+            foreach (var type in types)
+            {
+                AccountTypes.Add(type);
+            }
+
+            FileLogger.Log("AddAccountViewModel: LoadAccountTypes completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"AddAccountViewModel LoadAccountTypes ERRORE: {ex}");
         }
     }
 
-    private static string GetEnumDescription(Enum enumObj)
-    {
-        FieldInfo? fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
-        if (fieldInfo == null) return enumObj.ToString();
-
-        var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-        return attributes.Length > 0 ? attributes[0].Description : enumObj.ToString();
-    }
-
+    // --- IL MOMENTO IN CUI LA FRIZIONE ATTACCA ---
     [RelayCommand]
     private async Task SaveAccountAsync()
     {
-        if (string.IsNullOrWhiteSpace(Name) || SelectedAccountType is null)
+        try
         {
-            return;
+            FileLogger.Log("AddAccountViewModel: SaveAccount avviato");
+
+            // 1. Validazione (Fail-Fast)
+            if (string.IsNullOrWhiteSpace(Name) || SelectedAccountType is null)
+            {
+                FileLogger.Log("AddAccountViewModel: validazione fallita - Name o Type nulli");
+                // TODO: Valuta di mostrare un avviso a schermo all'utente
+                return;
+            }
+
+            // 2. Assemblaggio del Modello originale pulito per il Database
+            var newAccount = new Account
+            {
+                Name = this.Name.Trim(),
+                Type = this.SelectedAccountType.Value // Estraiamo l'enum puro
+            };
+
+            // 3. Salvataggio e Navigazione
+            await _accountService.AddAccountAsync(newAccount);
+            FileLogger.Log("AddAccountViewModel: account salvato, navigazione back");
+
+            await Shell.Current.GoToAsync("..");
         }
-
-        var newAccount = new Account
+        catch (Exception ex)
         {
-            Name = this.Name,
-            InitialBalance = this.InitialBalance,
-            Type = this.SelectedAccountType.Value
-        };
-
-        await _accountService.AddAccountAsync(newAccount);
-        await Shell.Current.GoToAsync("..");
+            FileLogger.Log($"AddAccountViewModel SaveAccount ERRORE: {ex}");
+        }
     }
+
+    // Traduttore statico AOT-Friendly
+    private static string GetEnumDescription(AccountType type) => type switch
+    {
+        AccountType.StipendioSpese => "Stipendio / Spese",
+        AccountType.Risparmio => "Risparmio",
+        AccountType.Investimento => "Investimento",
+        _ => type.ToString()
+    };
 }

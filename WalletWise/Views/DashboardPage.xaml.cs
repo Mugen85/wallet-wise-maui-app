@@ -101,4 +101,10 @@ public partial class DashboardPage : ContentPage
 
         return grid;
     }
+
+    private async void OnShowLogClicked(object sender, EventArgs e)
+    {
+        var log = FileLogger.ReadLog();
+        await DisplayAlert("Log", log, "OK");
+    }
 }

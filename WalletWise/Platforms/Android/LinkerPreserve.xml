@@ -1,0 +1,26 @@
+﻿<linker>
+	<assembly fullname="WalletWise">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="WalletWise.Persistence">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="Microsoft.EntityFrameworkCore">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="Microsoft.EntityFrameworkCore.Sqlite">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="SQLitePCLRaw.core">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="CommunityToolkit.Mvvm">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="Microsoft.Maui">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+	<assembly fullname="Microsoft.Maui.Controls">
+		<type fullname="*" preserve="all"/>
+	</assembly>
+</linker>

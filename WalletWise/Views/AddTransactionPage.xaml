@@ -9,66 +9,59 @@
     <Grid Padding="20" RowSpacing="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Riga 1: Data, Tipo, Importo -->
             <RowDefinition Height="Auto"/>
-            <!-- Riga 2: Conto, Categoria -->
             <RowDefinition Height="Auto"/>
-            <!-- Riga 3: Descrizione -->
             <RowDefinition Height="*"/>
-            <!-- Spacer -->
             <RowDefinition Height="Auto"/>
-            <!-- Pulsanti -->
         </Grid.RowDefinitions>
 
-        <!-- Riga 1 con 3 colonne -->
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="10">
             <VerticalStackLayout Grid.Column="0" Spacing="5">
-                <Label Text="Data"/>
+                <Label Text="Data" Style="{StaticResource FormLabel}"/>
                 <DatePicker Date="{Binding Date}" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Column="1" Spacing="5">
-                <Label Text="Importo"/>
-                <Entry Text="{Binding Amount, Converter={StaticResource DecimalConverter}}" 
-                Keyboard="Numeric" />
+                <Label Text="Importo" Style="{StaticResource FormLabel}"/>
+                <Entry Text="{Binding Amount, Converter={StaticResource DecimalConverter}}"
+                       Keyboard="Numeric" />
             </VerticalStackLayout>
 
-            <Picker Grid.Column="2" 
-                Title="Tipo" 
-                ItemsSource="{Binding TransactionTypes}" 
-                SelectedItem="{Binding SelectedTransactionType}" 
+            <Picker Grid.Column="2"
+                Title="Tipo"
+                ItemsSource="{Binding TransactionTypes}"
+                SelectedItem="{Binding SelectedTransactionType}"
                 ItemDisplayBinding="{Binding Name}"
+                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                 VerticalOptions="End"/>
-
-            
         </Grid>
 
-        <!-- Riga 2 con 2 colonne -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
-            <Picker Grid.Column="0" 
-                Title="Conto" 
-                ItemsSource="{Binding Accounts}" 
-                SelectedItem="{Binding SelectedAccount}" 
-                ItemDisplayBinding="{Binding Name}" />
+            <Picker Grid.Column="0"
+                Title="Conto"
+                ItemsSource="{Binding Accounts}"
+                SelectedItem="{Binding SelectedAccount}"
+                ItemDisplayBinding="{Binding Name}"
+                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
 
-            <Picker Grid.Column="1" 
-                Title="Categoria" 
-                ItemsSource="{Binding Categories}" 
-                SelectedItem="{Binding SelectedCategory}" 
-                ItemDisplayBinding="{Binding .}"/>
+            <Picker Grid.Column="1"
+                    Title="Categoria"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                    TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
         </Grid>
 
-        <!-- Riga 3 per la Descrizione -->
         <VerticalStackLayout Grid.Row="2" Spacing="5">
-            <Label Text="Descrizione (Opzionale)"/>
+            <Label Text="Descrizione (Opzionale)" Style="{StaticResource FormLabel}"/>
             <Entry Text="{Binding Description}" />
         </VerticalStackLayout>
 
-        <!-- Pulsanti raggruppati e ancorati al fondo -->
         <VerticalStackLayout Grid.Row="4" Margin="0,20,0,0" Spacing="10">
             <Button Text="Salva Transazione" Command="{Binding SaveTransactionCommand}" Style="{StaticResource PrimaryButton}" />
             <Button Text="Annulla" Command="{Binding CancelCommand}" Style="{StaticResource SecondaryButton}" />
         </VerticalStackLayout>
     </Grid>
-
 </ContentPage>

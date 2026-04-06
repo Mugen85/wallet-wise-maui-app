@@ -1,4 +1,5 @@
 // in WalletWise/Views/AddTransactionPage.xaml.cs
+using WalletWise.Services;
 using WalletWise.ViewModels;
 
 namespace WalletWise.Views;
@@ -12,6 +13,19 @@ public partial class AddTransactionPage : ContentPage
 
         // Questa è la riga fondamentale che collega la View al ViewModel
         BindingContext = viewModel;
+
+        try
+        {
+            FileLogger.Log("AddTransactionPage: costruttore avviato");
+            InitializeComponent();
+            FileLogger.Log("AddTransactionPage: InitializeComponent completato");
+            BindingContext = viewModel;
+            FileLogger.Log("AddTransactionPage: BindingContext impostato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"AddTransactionPage ERRORE costruttore: {ex}");
+        }
     }
 
     protected override async void OnAppearing()

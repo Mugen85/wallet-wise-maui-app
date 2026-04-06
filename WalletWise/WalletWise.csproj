@@ -61,6 +61,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiFont Remove="Resources\Fonts\OpenSans-Regular.ttf" />
 	  <MauiFont Remove="Resources\Fonts\OpenSans-Semibold.ttf" />
 	</ItemGroup>
@@ -86,6 +90,8 @@
 
 		<!-- Pacchetto per il Logging (versione .NET 8) -->
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<!-- Per conservare file importanti per release Android -->
+		<TrimmerRootDescriptor Include="Platforms\Android\LinkerPreserve.xml" />
 	</ItemGroup>	
 
 	<ItemGroup>

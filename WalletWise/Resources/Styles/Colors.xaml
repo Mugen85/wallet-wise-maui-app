@@ -41,8 +41,8 @@
     <Color x:Key="TextPrimaryLight">Black</Color>
     <Color x:Key="TextPrimaryDark">White</Color>
 
-    <Color x:Key="TextSecondaryLight">Gray</Color>
-    <Color x:Key="TextSecondaryDark">#A0A0A0</Color>
+    <Color x:Key="TextSecondaryLight">#6e6e6e</Color>
+    <Color x:Key="TextSecondaryDark">#E0E0E0</Color>
 
     <Color x:Key="CardBackgroundLight">White</Color>
     <Color x:Key="CardBackgroundDark">#1F1F1F</Color>

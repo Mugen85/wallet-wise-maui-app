@@ -26,7 +26,11 @@ public partial class BudgetViewModel(IBudgetService budgetService, IAlertService
     [RelayCommand]
     private async Task LoadBudgetsAsync()
     {
-        var now = DateTime.Now;
+        try
+        {
+            FileLogger.Log("BudgetViewModel: LoadBudgets avviato");
+
+            var now = DateTime.Now;
         var budgets = await budgetService.GetBudgetStatusForMonthAsync(now.Year, now.Month);
 
         for (int i = 0; i < budgets.Count; i++)
@@ -39,7 +43,13 @@ public partial class BudgetViewModel(IBudgetService budgetService, IAlertService
         // --- INIZIO MODIFICA (PEZZO 5) ---
         // 3. Aggiorniamo il "sensore" ogni volta che carichiamo i dati.
         HasBudgets = BudgetItems.Any();
-        // --- FINE MODIFICA ---
+            // --- FINE MODIFICA ---
+            FileLogger.Log("BudgetViewModel: LoadBudgets completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"BudgetViewModel ERRORE: {ex}");
+        }
     }
 
     // --- INIZIO MODIFICA (PEZZO 5) ---

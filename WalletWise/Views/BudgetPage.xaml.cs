@@ -10,9 +10,19 @@ public partial class BudgetPage : ContentPage
 
     public BudgetPage(BudgetViewModel viewModel)
     {
-        InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
+        try
+        {
+            FileLogger.Log("BudgetPage: costruttore avviato");
+            InitializeComponent();
+            FileLogger.Log("BudgetPage: InitializeComponent completato");
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
+            FileLogger.Log("BudgetPage: costruttore completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"BudgetPage ERRORE costruttore: {ex}");
+        }
     }
 
     protected override void OnAppearing()
@@ -131,4 +141,5 @@ public partial class BudgetPage : ContentPage
         frame.Content = mainLayout;
         return frame;
     }
+
 }

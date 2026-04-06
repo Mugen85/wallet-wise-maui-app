@@ -6,9 +6,7 @@ using System.ComponentModel;
 using System.Reflection;
 using WalletWise.Persistence.Models;
 using WalletWise.Services;
-
 namespace WalletWise.ViewModels;
-
 
 public partial class AddTransactionViewModel(ITransactionService transactionService, IAccountService accountService) : ObservableObject
 {
@@ -18,64 +16,83 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
     [ObservableProperty] private TransactionTypeDisplay? _selectedTransactionType;
     [ObservableProperty] private Account? _selectedAccount;
     [ObservableProperty] private string? _selectedCategory;
-
     public ObservableCollection<TransactionTypeDisplay> TransactionTypes { get; } = [];
     public ObservableCollection<Account> Accounts { get; } = [];
     public ObservableCollection<string> Categories { get; } = [];
 
     partial void OnSelectedTransactionTypeChanged(TransactionTypeDisplay? value)
     {
-        Categories.Clear();
-        SelectedCategory = null;
-
-        if (value?.Value == TransactionType.Expense) // <-- Corretto a Uscita
+        try
         {
-            CategoryData.GetExpenseCategories().ForEach(c => Categories.Add(c));
+            FileLogger.Log("AddTransactionViewModel: OnSelectedTransactionTypeChanged avviato");
+            Categories.Clear();
+            SelectedCategory = null;
+            if (value?.Value == TransactionType.Expense)
+                CategoryData.GetExpenseCategories().ForEach(c => Categories.Add(c));
+            else if (value?.Value == TransactionType.Income)
+                CategoryData.GetIncomeCategories().ForEach(c => Categories.Add(c));
+            FileLogger.Log("AddTransactionViewModel: OnSelectedTransactionTypeChanged completato");
         }
-        else if (value?.Value == TransactionType.Income) // <-- Corretto a Entrata
+        catch (Exception ex)
         {
-            CategoryData.GetIncomeCategories().ForEach(c => Categories.Add(c));
+            FileLogger.Log($"AddTransactionViewModel OnSelectedTransactionTypeChanged ERRORE: {ex}");
         }
     }
 
     [RelayCommand]
     private async Task LoadDataAsync()
     {
-        if (!Accounts.Any())
+        try
         {
-            var accountsList = await accountService.GetAccountsAsync();
-            foreach (var acc in accountsList) Accounts.Add(acc);
+            FileLogger.Log("AddTransactionViewModel: LoadData avviato");
+            if (!Accounts.Any())
+            {
+                var accountsList = await accountService.GetAccountsAsync();
+                foreach (var acc in accountsList) Accounts.Add(acc);
+            }
+            if (!TransactionTypes.Any())
+            {
+                var types = Enum.GetValues<TransactionType>().Select(tt => new TransactionTypeDisplay { Value = tt, Name = GetEnumDescription(tt) });
+                foreach (var type in types) TransactionTypes.Add(type);
+            }
+            if (SelectedTransactionType == null && TransactionTypes.Any())
+                SelectedTransactionType = TransactionTypes.First(t => t.Value == TransactionType.Expense);
+            FileLogger.Log("AddTransactionViewModel: LoadData completato");
         }
-
-        if (!TransactionTypes.Any())
+        catch (Exception ex)
         {
-            var types = Enum.GetValues<TransactionType>().Select(tt => new TransactionTypeDisplay { Value = tt, Name = GetEnumDescription(tt) });
-            foreach (var type in types) TransactionTypes.Add(type);
-        }
-
-        if (SelectedTransactionType == null && TransactionTypes.Any())
-        {
-            SelectedTransactionType = TransactionTypes.First(t => t.Value == TransactionType.Expense); // <-- Corretto a Uscita
+            FileLogger.Log($"AddTransactionViewModel LoadData ERRORE: {ex}");
         }
     }
 
     [RelayCommand]
     private async Task SaveTransactionAsync()
     {
-        if (SelectedAccount is null || SelectedTransactionType is null || !Amount.HasValue || Amount.Value <= 0) return;
-
-        var newTransaction = new Transaction
+        try
         {
-            Amount = Amount.Value,
-            Description = Description,
-            Category = SelectedCategory ?? string.Empty,
-            Date = Date,
-            Type = SelectedTransactionType.Value,
-            AccountId = SelectedAccount.Id
-        };
-        await transactionService.AddTransactionAsync(newTransaction);
-
-        await Shell.Current.GoToAsync("..");
+            FileLogger.Log("AddTransactionViewModel: SaveTransaction avviato");
+            if (SelectedAccount is null || SelectedTransactionType is null || !Amount.HasValue || Amount.Value <= 0)
+            {
+                FileLogger.Log("AddTransactionViewModel: validazione fallita");
+                return;
+            }
+            var newTransaction = new Transaction
+            {
+                Amount = Amount.Value,
+                Description = Description,
+                Category = SelectedCategory ?? string.Empty,
+                Date = Date,
+                Type = SelectedTransactionType.Value,
+                AccountId = SelectedAccount.Id
+            };
+            await transactionService.AddTransactionAsync(newTransaction);
+            FileLogger.Log("AddTransactionViewModel: transazione salvata, navigazione back");
+            await Shell.Current.GoToAsync("..");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"AddTransactionViewModel SaveTransaction ERRORE: {ex}");
+        }
     }
 
     [RelayCommand]
@@ -86,9 +103,17 @@ public partial class AddTransactionViewModel(ITransactionService transactionServ
 
     private static string GetEnumDescription(Enum enumObj)
     {
-        FieldInfo? fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
-        if (fieldInfo is null) return enumObj.ToString();
-        var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-        return attributes.Length > 0 ? attributes[0].Description : enumObj.ToString();
+        try
+        {
+            FieldInfo? fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
+            if (fieldInfo is null) return enumObj.ToString();
+            var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : enumObj.ToString();
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"GetEnumDescription ERRORE: {ex}");
+            return enumObj.ToString();
+        }
     }
 }

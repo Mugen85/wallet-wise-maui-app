@@ -1,4 +1,5 @@
-﻿using WalletWise.Views;
+﻿using WalletWise.Services;
+using WalletWise.Views;
 
 namespace WalletWise;
 
@@ -10,47 +11,53 @@ public partial class AppShell : Shell
 
     public AppShell()
     {
-        InitializeComponent();
-
-        // Mappa GPS Solida
-        Routing.RegisterRoute(nameof(AddAccountPage), typeof(AddAccountPage));
-        Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
-        Routing.RegisterRoute(nameof(AddBudgetPage), typeof(AddBudgetPage));
-        Routing.RegisterRoute(nameof(RecurringTransactionsPage), typeof(RecurringTransactionsPage));
-        Routing.RegisterRoute(nameof(AddRecurringTransactionPage), typeof(AddRecurringTransactionPage));
-
-        // --- INIZIO MODIFICA CHIRURGICA ---
-        // Invece di usare OnAppearing (troppo presto),
-        // ci abboniamo all'evento Loaded.
-        // Questo scatta solo quando la Shell è completamente
-        // montata e pronta (Handler != null).
-        this.Loaded += AppShell_Loaded;
-        // --- FINE MODIFICA CHIRURGICA ---
+        try
+        {
+            FileLogger.Log("AppShell: costruttore avviato");
+            InitializeComponent();
+            FileLogger.Log("AppShell: InitializeComponent completato");
+            Routing.RegisterRoute(nameof(AddAccountPage), typeof(AddAccountPage));
+            Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
+            Routing.RegisterRoute(nameof(AddBudgetPage), typeof(AddBudgetPage));
+            Routing.RegisterRoute(nameof(RecurringTransactionsPage), typeof(RecurringTransactionsPage));
+            Routing.RegisterRoute(nameof(AddRecurringTransactionPage), typeof(AddRecurringTransactionPage));
+            FileLogger.Log("AppShell: route registrate");
+            this.Loaded += AppShell_Loaded;
+            FileLogger.Log("AppShell: costruttore completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"AppShell ERRORE: {ex}");
+        }
     }
 
     private async void AppShell_Loaded(object? sender, EventArgs e)
     {
-        // Se abbiamo già fatto il controllo, usciamo.
+        FileLogger.Log("AppShell_Loaded: evento scattato");
         if (_isStartupCheckDone) return;
         _isStartupCheckDone = true;
 
-        // --- RESET PER COLLAUDO (DA TOGLIERE DOPO) ---
-        //Preferences.Remove("has_completed_onboarding");
-        // ---------------------------------------------
-
-        bool hasCompletedOnboarding = Preferences.Get("has_completed_onboarding", false);
-
-        if (!hasCompletedOnboarding)
+        try
         {
-            // Ora siamo nell'evento Loaded, quindi Handler NON è null.
-            // Possiamo chiamare l'officina con sicurezza.
-            var onboardingPage = this.Handler?.MauiContext?.Services.GetService<OnboardingPage>();
+            FileLogger.Log("AppShell_Loaded: controllo onboarding");
+            bool hasCompletedOnboarding = Preferences.Get("has_completed_onboarding", false);
+            FileLogger.Log($"AppShell_Loaded: hasCompletedOnboarding = {hasCompletedOnboarding}");
 
-            if (onboardingPage != null)
+            if (!hasCompletedOnboarding)
             {
-                // Navigazione modale sicura
-                await this.Navigation.PushModalAsync(onboardingPage, false);
+                var onboardingPage = this.Handler?.MauiContext?.Services.GetService<OnboardingPage>();
+                FileLogger.Log($"AppShell_Loaded: onboardingPage = {(onboardingPage == null ? "NULL" : "OK")}");
+                if (onboardingPage != null)
+                {
+                    await this.Navigation.PushModalAsync(onboardingPage, false);
+                    FileLogger.Log("AppShell_Loaded: onboarding mostrato");
+                }
             }
+            FileLogger.Log("AppShell_Loaded: completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"AppShell_Loaded ERRORE: {ex}");
         }
     }
 

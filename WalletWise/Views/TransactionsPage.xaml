@@ -14,7 +14,7 @@
                     <Frame Padding="15" Margin="5" Style="{StaticResource InfoCard}">
                         <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
                             <Label Grid.Column="0" Grid.Row="0" Text="{Binding Description}" FontAttributes="Bold" FontSize="16"/>
-                            <Label Grid.Column="0" Grid.Row="1" Text="{Binding Account.Name}" FontSize="12" TextColor="{StaticResource SecondaryText}"/>
+                            <Label Grid.Column="0" Grid.Row="1" Text="{Binding Account.Name}" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
 
                             <Label Grid.Column="1" Grid.Row="0" HorizontalOptions="End" FontSize="18" FontAttributes="Bold">
                                 <Label.Triggers>
@@ -28,7 +28,7 @@
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
-                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="End" FontSize="12" TextColor="{StaticResource SecondaryText}"/>
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="End" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>

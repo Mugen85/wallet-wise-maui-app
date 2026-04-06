@@ -21,7 +21,7 @@
             Text="Per iniziare, crea il tuo primo conto. Potrai aggiungerne altri in seguito."
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
-            TextColor="{StaticResource SecondaryText}"/>
+            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
 
         <Frame Style="{StaticResource InfoCard}" 
        Padding="20" 

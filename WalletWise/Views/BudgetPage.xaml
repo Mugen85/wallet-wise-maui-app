@@ -37,7 +37,7 @@
                 Text="Vuoi crearne di nuovi o copiare quelli del mese scorso?"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                TextColor="{StaticResource SecondaryText}"/>
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
 
             <Button
                 Text="Copia budget dal mese scorso"

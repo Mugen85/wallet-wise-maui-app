@@ -17,20 +17,30 @@ public partial class DashboardViewModel(IAccountService accountService, IBudgetS
     [RelayCommand]
     private async Task LoadDataAsync()
     {
-        var accounts = await accountService.GetAccountsAsync();
-        TotalBalance = accounts.Sum(a => a.CurrentBalance);
-
-        var now = DateTime.Now;
-        var budgetStatusList = await budgetService.GetBudgetStatusForMonthAsync(now.Year, now.Month);
-
-        // --- INIZIO MODIFICA CHIAVE ---
-        // Assegniamo un colore a ogni budget prima di passarlo alla UI.
-        for (int i = 0; i < budgetStatusList.Count; i++)
+        try
         {
-            budgetStatusList[i].CategoryColor = ColorData.GetColorByIndex(i);
-        }
-        // --- FINE MODIFICA CHIAVE ---
+            FileLogger.Log("DashboardViewModel: LoadData avviato");
 
-        BudgetSummary = new ObservableCollection<BudgetStatus>(budgetStatusList);
+            var accounts = await accountService.GetAccountsAsync();
+            FileLogger.Log($"DashboardViewModel: {accounts.Count} conti caricati");
+            TotalBalance = accounts.Sum(a => a.CurrentBalance);
+
+            var now = DateTime.Now;
+            var budgetStatusList = await budgetService.GetBudgetStatusForMonthAsync(now.Year, now.Month);
+            FileLogger.Log($"DashboardViewModel: {budgetStatusList.Count} budget caricati");
+
+            for (int i = 0; i < budgetStatusList.Count; i++)
+            {
+                budgetStatusList[i].CategoryColor = ColorData.GetColorByIndex(i);
+            }
+            FileLogger.Log("DashboardViewModel: colori assegnati");
+
+            BudgetSummary = new ObservableCollection<BudgetStatus>(budgetStatusList);
+            FileLogger.Log("DashboardViewModel: LoadData completato");
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"DashboardViewModel ERRORE: {ex}");
+        }
     }
 }
