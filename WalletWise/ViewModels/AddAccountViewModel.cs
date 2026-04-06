@@ -18,9 +18,9 @@ public class AccountTypeDisplayModel
 }
 
 // 2. IL VIEWMODEL
-public partial class AddAccountViewModel : ObservableObject
+public partial class AddAccountViewModel(IAccountService accountService) : ObservableObject
 {
-    private readonly IAccountService _accountService;
+    private readonly IAccountService _accountService = accountService;
 
     // --- PROPRIETÀ BINDATE ALLA UI ---
     // Il Toolkit genererà in automatico le proprietà pubbliche Name, InitialBalance e SelectedAccountType.
@@ -33,12 +33,6 @@ public partial class AddAccountViewModel : ObservableObject
     private AccountTypeDisplayModel? _selectedAccountType;
 
     public ObservableCollection<AccountTypeDisplayModel> AccountTypes { get; } = [];
-
-    // Costruttore
-    public AddAccountViewModel(IAccountService accountService)
-    {
-        _accountService = accountService;
-    }
 
     [RelayCommand]
     private void LoadAccountTypes()
