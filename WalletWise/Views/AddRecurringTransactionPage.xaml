@@ -8,27 +8,28 @@
 
     <ScrollView>
         <VerticalStackLayout Spacing="15" Padding="20">
-
+          
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10"
                   IsVisible="{OnIdiom Desktop=True, Default=False}">
 
                 <VerticalStackLayout Spacing="5">
                     <Label Text="Conto" FontAttributes="Bold" />
+                    <!-- Tolto ItemDisplayBinding -->
                     <Picker ItemsSource="{Binding Accounts}"
-                            SelectedItem="{Binding SelectedAccount}"
-                            ItemDisplayBinding="{Binding Name}" />
+                            SelectedItem="{Binding SelectedAccount}" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                     <Label Text="Tipo" FontAttributes="Bold" />
+                    <!-- Tolto ItemDisplayBinding -->
                     <Picker ItemsSource="{Binding TransactionTypes}"
-                            SelectedItem="{Binding SelectedTransactionType}"
-                            ItemDisplayBinding="{Binding Name}" />
+                            SelectedItem="{Binding SelectedTransactionType}" />
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="2" Spacing="5">
                     <Label Text="Importo" FontAttributes="Bold" />
-                    <Entry Text="{Binding Amount}"
+                    <!-- Aggiornato a AmountText con Mode=TwoWay -->
+                    <Entry Text="{Binding AmountText, Mode=TwoWay}"
                            Placeholder="0,00"
                            Keyboard="Numeric" />
                 </VerticalStackLayout>
@@ -37,19 +38,20 @@
             <VerticalStackLayout Spacing="15"
                                  IsVisible="{OnIdiom Desktop=False, Default=True}">
                 <Label Text="Conto" FontAttributes="Bold" />
+                <!-- Tolto ItemDisplayBinding -->
                 <Picker Title="Seleziona un conto"
                         ItemsSource="{Binding Accounts}"
-                        SelectedItem="{Binding SelectedAccount}"
-                        ItemDisplayBinding="{Binding Name}" />
+                        SelectedItem="{Binding SelectedAccount}" />
 
                 <Label Text="Tipo" FontAttributes="Bold" />
+                <!-- Tolto ItemDisplayBinding -->
                 <Picker Title="Seleziona tipo"
                         ItemsSource="{Binding TransactionTypes}"
-                        SelectedItem="{Binding SelectedTransactionType}"
-                        ItemDisplayBinding="{Binding Name}" />
+                        SelectedItem="{Binding SelectedTransactionType}" />
 
                 <Label Text="Importo" FontAttributes="Bold" />
-                <Entry Text="{Binding Amount}"
+                <!-- Aggiornato a AmountText con Mode=TwoWay -->
+                <Entry Text="{Binding AmountText, Mode=TwoWay}"
                        Placeholder="0,00"
                        Keyboard="Numeric" />
             </VerticalStackLayout>
@@ -59,18 +61,19 @@
                    Placeholder="Es. Stipendio, Affitto..." />
 
             <Label Text="Categoria" FontAttributes="Bold" />
+            <!-- Tolto ItemDisplayBinding -->
             <Picker Title="Seleziona categoria"
                     ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding SelectedCategory}"
-                    ItemDisplayBinding="{Binding .}" />
+                    SelectedItem="{Binding SelectedCategory}" />
 
             <Label Text="Ogni quanto?" FontAttributes="Bold" />
+            <!-- Tolto ItemDisplayBinding -->
             <Picker Title="Seleziona frequenza"
                     ItemsSource="{Binding Frequencies}"
-                    SelectedItem="{Binding SelectedFrequency}"
-                    ItemDisplayBinding="{Binding Name}" />
+                    SelectedItem="{Binding SelectedFrequency}" />
 
             <VerticalStackLayout Spacing="5" IsVisible="{Binding IsMonthly}">
+                
                 <Label Text="Giorno del mese" FontAttributes="Bold" />
                 <Picker Title="Seleziona giorno"
                         ItemsSource="{Binding DaysOfMonth}"

@@ -10,22 +10,22 @@ namespace WalletWise.Services
         public async Task<List<Account>> GetAccountsAsync()
         {
             await using var context = await contextFactory.CreateDbContextAsync();
-            var accounts = await context.Accounts.Include(a => a.Transactions).ToListAsync();
 
-            // --- INIZIO LOGICA DI CALCOLO ---
-            foreach (var account in accounts)
-            {
-                decimal income = account.Transactions
-                    .Where(t => t.Type == TransactionType.Income)
-                    .Sum(t => t.Amount);
-
-                decimal expense = account.Transactions
-                    .Where(t => t.Type == TransactionType.Expense)
-                    .Sum(t => t.Amount);
-
-                account.CurrentBalance = account.InitialBalance + income - expense;
-            }
-            // --- FINE LOGICA DI CALCOLO ---
+            // LINQ to Entities: Il calcolo viene tradotto in una query SQL SUM() 
+            // eseguita direttamente dal motore SQLite. 
+            // In RAM arriva solo un numero, non migliaia di oggetti Transaction!
+            var accounts = await context.Accounts
+                .Select(a => new Account
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    InitialBalance = a.InitialBalance,
+                    Type = a.Type,
+                    CurrentBalance = a.InitialBalance +
+                                     a.Transactions.Where(t => t.Type == TransactionType.Income).Sum(t => (decimal?)t.Amount ?? 0) -
+                                     a.Transactions.Where(t => t.Type == TransactionType.Expense).Sum(t => (decimal?)t.Amount ?? 0)
+                })
+                .ToListAsync();
 
             return accounts;
         }

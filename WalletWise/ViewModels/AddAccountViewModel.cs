@@ -32,6 +32,9 @@ public partial class AddAccountViewModel(IAccountService accountService) : Obser
     [ObservableProperty]
     private AccountTypeDisplayModel? _selectedAccountType;
 
+    [ObservableProperty]
+    private string _initialBalanceText = string.Empty;
+
     public ObservableCollection<AccountTypeDisplayModel> AccountTypes { get; } = [];
 
     [RelayCommand]
@@ -71,22 +74,33 @@ public partial class AddAccountViewModel(IAccountService accountService) : Obser
         {
             FileLogger.Log("AddAccountViewModel: SaveAccount avviato");
 
-            // 1. Validazione (Fail-Fast)
+            // Validazione base
             if (string.IsNullOrWhiteSpace(Name) || SelectedAccountType is null)
             {
                 FileLogger.Log("AddAccountViewModel: validazione fallita - Name o Type nulli");
-                // TODO: Valuta di mostrare un avviso a schermo all'utente
                 return;
             }
 
-            // 2. Assemblaggio del Modello originale pulito per il Database
+            // --- IL PARSING CORAZZATO ---
+            decimal parsedBalance = 0m;
+            if (!string.IsNullOrWhiteSpace(_initialBalanceText))
+            {
+                // Normalizziamo le virgole in punti, indipendentemente dalla tastiera usata
+                string normalizedInput = _initialBalanceText.Replace(",", ".");
+
+                // Tentiamo il parsing. Se fallisce (es. l'utente ha incollato testo a caso), parsedBalance rimane 0
+                decimal.TryParse(normalizedInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out parsedBalance);
+            }
+
+            // Assemblaggio del Modello per il Database
             var newAccount = new Account
             {
                 Name = this.Name.Trim(),
-                Type = this.SelectedAccountType.Value // Estraiamo l'enum puro
+                InitialBalance = parsedBalance, // Passiamo il decimale appena calcolato
+                Type = this.SelectedAccountType.Value
             };
 
-            // 3. Salvataggio e Navigazione
+            // Salvataggio
             await _accountService.AddAccountAsync(newAccount);
             FileLogger.Log("AddAccountViewModel: account salvato, navigazione back");
 

@@ -11,7 +11,7 @@
         <Entry Text="{Binding Name}" Placeholder="Es. Conto Corrente Intesa" />
 
         <Label Text="Saldo Iniziale" Style="{StaticResource FormLabel}" Margin="0,10,0,0" />
-        <Entry Text="{Binding InitialBalance, Converter={StaticResource StringDecimalConverter}}" Placeholder="0.00"
+        <Entry Text="{Binding InitialBalanceText}" Placeholder="0.00"
        Keyboard="Numeric" />
 
         <Label Text="Tipo di Conto" Style="{StaticResource FormLabel}" Margin="0,10,0,0" />

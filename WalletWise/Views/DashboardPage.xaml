@@ -21,13 +21,13 @@
             <Frame Style="{StaticResource InfoCard}">
                 <VerticalStackLayout x:Name="BudgetContainer" Spacing="15" />
             </Frame>
-            <Button Text="📋 Log" 
+            <!--<Button Text="📋 Log" 
                     Clicked="OnShowLogClicked"
                     HorizontalOptions="End"
                     VerticalOptions="End"
                     Margin="16"
                     FontSize="10"
-                    Opacity="0.3"/>
+                    Opacity="0.3"/>-->
 
         </VerticalStackLayout>
         
